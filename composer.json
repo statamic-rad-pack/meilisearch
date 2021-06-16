@@ -1,0 +1,24 @@
+{
+    "name": "elvenstar/statamic-meilisearch",
+    "autoload": {
+        "psr-4": {
+            "Elvenstar\\StatamicMeiliSearch\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Meilisearch",
+            "description": "Statamic Meilisearch addon"
+        },
+        "laravel": {
+            "providers": [
+                "Elvenstar\\StatamicMeiliSearch\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "meilisearch/meilisearch-php": "^0.18.2",
+        "guzzlehttp/guzzle": "^7.3",
+        "http-interop/http-factory-guzzle": "^1.0"
+    }
+}
