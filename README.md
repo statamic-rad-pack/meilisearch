@@ -3,7 +3,7 @@
 ### Installation
 
 ```bash
-composer require elvenstar/statamic-typesense
+composer require elvenstar/statamic-meilisearch
 ```
 
 Add the following variables to your env file:
