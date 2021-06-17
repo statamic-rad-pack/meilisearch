@@ -79,5 +79,5 @@ MeiliSearch can only index 1000 words... which isn't so great for long markdown 
 ],
 ```
 
-This will create a few extra fields like `content_1`, `content_2`, ... `content_12`, etc. When you perform a search it'll still search through all of them and return the most relevant result, but it's not possible to show highlights anymore for matching words on the javascript client. You'll have trouble figuring out if you should show `content_1` or `content_8` highlights. So if you go this route, make sure each entry has a synopsis you could show instead of highlights.
+This will create a few extra fields like `content_1`, `content_2`, ... `content_12`, etc. When you perform a search it'll still search through all of them and return the most relevant result, but it's not possible to show highlights anymore for matching words on the javascript client. You'll have trouble figuring out if you should show `content_1` or `content_8` highlights. So if you go this route, make sure each entry has a synopsis you could show instead of highlights. I wouldn't recommend it at the moment.
 
