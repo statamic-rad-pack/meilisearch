@@ -1,5 +1,7 @@
 # Statamic MeiliSearch Driver
 
+***Disclaimer: It's a dev release. I would not recommend using this in production until more testing has been done.***
+
 ### Installation
 
 ```bash
