@@ -13,7 +13,7 @@ MEILI_SEARCH_URL=http://127.0.0.1:7700
 MEILI_MASTER_KEY=
 ```
 
-The master key is like a password, if you auto-deploy a MeiliSearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys:
+The master key is like a password, if you auto-deploy a MeiliSearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
 
 ```bash
 # Export the key
