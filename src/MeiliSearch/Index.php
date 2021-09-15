@@ -7,8 +7,8 @@ use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
 use MeiliSearch\Client;
 
-class Index extends BaseIndex {
-
+class Index extends BaseIndex
+{
     protected $client;
 
     public function __construct(Client $client, $name, $config)
@@ -66,6 +66,7 @@ class Index extends BaseIndex {
     {
         try {
             $this->client->createIndex($this->name, ['primaryKey' => 'id']);
+            $index->updateSettings($this->config['settings'] ?? []);
         } catch (ApiException $e) {
             $this->handleMeiliSearchException($e, 'createIndex');
         }
@@ -77,7 +78,7 @@ class Index extends BaseIndex {
         $this->createIndex();
 
         // Prepare documents for update
-        $searchables = $this->searchables()->all()->map(function($entry) {
+        $searchables = $this->searchables()->all()->map(function ($entry) {
             return $this->searchables()->fields($entry);
         });
 

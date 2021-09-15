@@ -30,13 +30,13 @@ $ curl \
   -X GET 'http://localhost:7700/keys'
 ```
 
-Add the new driver to the `statamic.search` config file:
+Add the new driver to the `statamic/search.php` config file:
 
 ```php
     'drivers' => [
-        
+
         // other drivers
-        
+
         'meilisearch' => [
             'credentials' => [
                 'url' => env('MEILI_SEARCH_URL', 'http://localhost:7700'),
@@ -44,6 +44,22 @@ Add the new driver to the `statamic.search` config file:
             ],
         ],
     ],
+```
+
+### Search Settings
+
+Any additional settings you want to define per index can be included in the `statamic/search.php` config file. The settings will be updated when the index is created.
+
+```php
+// articles
+'articles' => [
+    'driver' => 'meilisearch',
+    'searchables' => ['collection:articles'],
+    'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
+    'settings' => [
+      'filterableAttributes' => ['type', 'locale'],
+    ],
+],
 ```
 
 ### Quirks
@@ -82,4 +98,3 @@ MeiliSearch can only index 1000 words... which isn't so great for long markdown 
 ```
 
 This will create a few extra fields like `content_1`, `content_2`, ... `content_12`, etc. When you perform a search it'll still search through all of them and return the most relevant result, but it's not possible to show highlights anymore for matching words on the javascript client. You'll have trouble figuring out if you should show `content_1` or `content_8` highlights. So if you go this route, make sure each entry has a synopsis you could show instead of highlights. I wouldn't recommend it at the moment.
-
