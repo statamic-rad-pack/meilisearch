@@ -11,15 +11,15 @@ composer require elvenstar/statamic-meilisearch
 Add the following variables to your env file:
 
 ```txt
-MEILI_SEARCH_URL=http://127.0.0.1:7700
-MEILI_MASTER_KEY=
+MEILISEARCH_HOST=http://127.0.0.1:7700
+MEILISEARCH_KEY=
 ```
 
 The master key is like a password, if you auto-deploy a MeiliSearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
 
 ```bash
 # Export the key
-$ export MEILI_MASTER_KEY=AWESOMESAUCE
+$ export MEILISEARCH_KEY=AWESOMESAUCE
 
 # Start the meilisearch server again
 $ meilisearch
@@ -39,8 +39,8 @@ Add the new driver to the `statamic/search.php` config file:
 
         'meilisearch' => [
             'credentials' => [
-                'url' => env('MEILI_SEARCH_URL', 'http://localhost:7700'),
-                'secret' => env('MEILI_MASTER_KEY', ''),
+                'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+                'secret' => env('MEILISEARCH_KEY', ''),
             ],
         ],
     ],
