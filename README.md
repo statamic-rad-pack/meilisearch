@@ -62,10 +62,6 @@ Any additional settings you want to define per index can be included in the `sta
 ],
 ```
 
-### Important
-
-Remember to include `id` field for every search index in the config. The `id` is the primary key on MeiliSearch and the documents won't be saved if you forget to include this.
-
 ### Quirks
 
 MeiliSearch can only index 1000 words... which isn't so great for long markdown articles. You can overcome this by breaking the content into smaller chunks:

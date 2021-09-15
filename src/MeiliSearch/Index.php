@@ -79,7 +79,10 @@ class Index extends BaseIndex
 
         // Prepare documents for update
         $searchables = $this->searchables()->all()->map(function ($entry) {
-            return $this->searchables()->fields($entry);
+          return array_merge(
+              $this->searchables()->fields($entry),
+              $this->getDefaultFields($entry),
+          )
         });
 
         // Update documents
@@ -109,6 +112,18 @@ class Index extends BaseIndex
         return $this->client->index($this->name);
     }
 
+    private function getDefaultFields($entry)
+    {
+        $fields = ['id' => $entry->id()];
+
+        $entries = collect(['Statamic\Entries\Entry']);
+        if ($entries->contains(get_class($entry))) {
+            $fields['collection'] = $entry->collectionHandle();
+        }
+
+        return $fields;
+    }
+    
     private function handleMeiliSearchException($e, $method)
     {
         // custom error parsing for meilisearch exceptions
