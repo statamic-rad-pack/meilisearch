@@ -65,7 +65,7 @@ class Index extends BaseIndex
     protected function createIndex()
     {
         try {
-            $this->client->createIndex($this->name, ['primaryKey' => 'id']);
+            $index = $this->client->createIndex($this->name, ['primaryKey' => 'id']);
             $index->updateSettings($this->config['settings'] ?? []);
         } catch (ApiException $e) {
             $this->handleMeiliSearchException($e, 'createIndex');
@@ -79,10 +79,10 @@ class Index extends BaseIndex
 
         // Prepare documents for update
         $searchables = $this->searchables()->all()->map(function ($entry) {
-          return array_merge(
-              $this->searchables()->fields($entry),
-              $this->getDefaultFields($entry),
-          )
+            return array_merge(
+                $this->searchables()->fields($entry),
+                $this->getDefaultFields($entry),
+            );
         });
 
         // Update documents
@@ -123,7 +123,7 @@ class Index extends BaseIndex
 
         return $fields;
     }
-    
+
     private function handleMeiliSearchException($e, $method)
     {
         // custom error parsing for meilisearch exceptions
