@@ -1,6 +1,6 @@
 # Statamic MeiliSearch Driver
 
-***Disclaimer: It's a dev release. I would not recommend using this in production until more testing has been done.***
+***Disclaimer: This search driver is in the final stages of testing for production deployment currently, however MeiliSearch is still changing often, so some problems may occur. Please submit any bugs you find so we can make the driver more stable. If you would like to help maintain the driver, please reach out.***
 
 ### Installation
 
@@ -62,9 +62,38 @@ Any additional settings you want to define per index can be included in the `sta
 ],
 ```
 
+You may include may different types of settings in each index:
+
+```php
+'articles' => [
+    'driver' => 'meilisearch',
+    'searchables' => ['collection:articles'],
+    'settings' => [
+        'filterableAttributes' => ['type', 'country', 'locale'],
+        'distinctAttribute' => 'thread',
+        'stopWords' => ['the', 'of', 'to'],
+        'sortableAttributes' => ['timestamp'],
+        'rankingRules' => [
+          'sort',
+          'words',
+          'typo',
+          'proximity',
+          'attribute',
+          'exactness',
+        ],
+    ],
+ ],
+```
+
 ### Quirks
 
-MeiliSearch can only index 1000 words... which isn't so great for long markdown articles. You can overcome this by breaking the content into smaller chunks:
+MeiliSearch can only index 1000 words... which isn't so great for long markdown articles. 
+
+#### Update
+As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/MeiliSearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
+
+#### Solution 1
+On earlier versions, you can overcome this by breaking the content into smaller chunks:
 
 ```php
 'articles' => [
@@ -98,3 +127,100 @@ MeiliSearch can only index 1000 words... which isn't so great for long markdown 
 ```
 
 This will create a few extra fields like `content_1`, `content_2`, ... `content_12`, etc. When you perform a search it'll still search through all of them and return the most relevant result, but it's not possible to show highlights anymore for matching words on the javascript client. You'll have trouble figuring out if you should show `content_1` or `content_8` highlights. So if you go this route, make sure each entry has a synopsis you could show instead of highlights. I wouldn't recommend it at the moment.
+
+
+#### Solution 2
+If you need a lot more fine-grained control, and need to break content down into paragraphs or even sentences. You could use a artisan command to parse the entries in a Statamic collection, split the content and store it in a database. Then sync the individual items to MeiliSearch using the `php artisan scout:import` command.
+
+1. Create a new database migration (make sure the migration has an origin UUID so you can link them to the parent entry)
+2. Create a new Model and add the `searchables` trait from Scout.
+3. Create an artisan command to parse all the entries and bulk import existing ones
+
+```php
+private function parseAll()
+    {
+        // disable search
+        Articles::withoutSyncingToSearch(function () {
+            // process all
+            $transcripts = Entry::query()
+                ->where('collection', 'articles')
+                ->where('published', true)
+                ->get()
+                ->each(function ($entry) {
+                    // push individual paragraphs or sentences to a collection
+                    $segments = $entries->customSplitMethod();
+
+                    $segments->each(function ($data) {
+                        try {
+                            $article = new Article($data);
+                            $article->save();
+                        } catch (\Illuminate\Database\QueryException $e) {
+                            dd($e);
+                        }
+                    });
+                });
+        });
+
+        $total = Article::all()->count();
+        $this->info("Imported {$total} entries into the articles index.");
+
+        $this->info("Bulk import the records with: ");
+        $this->info("php artisan scout:import \"App\Models\Article\" --chunk=100");
+    }
+```
+
+4. Add some Listeners to the EventServiceProvider to watch for update or delete events on the collection (to keep it in sync)
+
+```php
+    protected $listen = [
+        'Statamic\Events\EntrySaved' => [
+            'App\Listeners\ScoutArticleUpdated',
+        ],
+        'Statamic\Events\EntryDeleted' => [
+            'App\Listeners\ScoutArticleDeleted',
+        ],
+    ];
+```
+
+4. Create the Event Listeners, for example:
+
+```php
+    public function handle(EntryDeleted $event)
+    {
+        if ($event->entry->collectionHandle() !== 'articles') return;
+
+        // get the ID of the original transcript
+        $id = $event->entry->id();
+
+        // delete all from Scout with this origin ID
+        $paragraphs = Article::where('origin', $id);
+        $paragraphs->unsearchable();
+        $paragraphs->delete();
+    }
+
+    public function handle(EntrySaved $event)
+    {
+        // ... same as above ...
+
+        // if state:published
+        if (!$event->entry->published()) return;
+
+        // TODO: split $event->entry into paragraphs again and save them to the database,
+        // they will re-sync automatically with the Searchables Trait.
+    }
+```
+
+5. Create a placeholder, or empty index into the search config so you can create the index on MeiliSearch before importing the existing entries
+
+```php
+        // required as a placeholder where we store the paragraphs later
+        'articles' => [
+            'driver' => 'meilisearch',
+            'searchables' => [], // empty
+            'settings' => [
+                'filterableAttributes' => ['type', 'entity', 'locale'],
+                'distinctAttribute' => 'origin', // if you only want to return one result per entry
+                // any search settings
+            ],
+         ],
+```
