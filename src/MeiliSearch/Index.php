@@ -47,6 +47,10 @@ class Index extends BaseIndex
     protected function insertDocuments(Documents $documents)
     {
         try {
+            if ($documents->isEmpty()) {
+                return true;
+            }
+          
             return $this->getIndex()->updateDocuments($documents->all());
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
