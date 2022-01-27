@@ -47,9 +47,13 @@ class Index extends BaseIndex
     protected function insertDocuments(Documents $documents)
     {
         try {
+            if ($documents->isEmpty()) {
+                return true;
+            }
+          
             return $this->getIndex()->updateDocuments($documents->all());
         } catch (\Exception $e) {
-            throw new \Exception('Error connecting to MeiliSearch. Check your API credentials.', 0, $e);
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -65,8 +69,8 @@ class Index extends BaseIndex
     protected function createIndex()
     {
         try {
-            $index = $this->client->createIndex($this->name, ['primaryKey' => 'id']);
-            $index->updateSettings($this->config['settings'] ?? []);
+            $this->client->createIndex($this->name, ['primaryKey' => 'id']);
+            $this->getIndex()->updateSettings($this->config['settings'] ?? []);
         } catch (ApiException $e) {
             $this->handleMeiliSearchException($e, 'createIndex');
         }
