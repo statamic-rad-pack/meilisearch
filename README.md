@@ -1,6 +1,18 @@
 # Statamic MeiliSearch Driver
 
-***Disclaimer: This search driver is in the final stages of testing for production deployment currently, however MeiliSearch is still changing often, so some problems may occur. Please submit any bugs you find so we can make the driver more stable. If you would like to help maintain the driver, please reach out.***
+***Disclaimer: This search driver is used on a large production site, however MeiliSearch is still changing often, so some problems may occur. Please submit any bugs you find so we can make the driver more stable. If you would like to help maintain the driver, please reach out.***
+
+MeiliSearch driver uses a versioning system that matches MeiliSearch releases to try match releases with any breaking changes. For instance to work with v0.24 you would install the corresponding driver:
+
+```json
+"elvenstar/statamic-meilisearch": "^0.24"
+```
+
+To work with v0.25 you would also install the matching driver:
+
+```
+"elvenstar/statamic-meilisearch": "^0.25"
+```
 
 ### Installation
 
@@ -41,9 +53,21 @@ Add the new driver to the `statamic/search.php` config file:
             'credentials' => [
                 'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
                 'secret' => env('MEILISEARCH_KEY', ''),
+                // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
             ],
         ],
     ],
+```
+
+You can optionally add `search_api_key` which makes it easier to call the key on the frontend javascript code:
+
+```html
+<script type="text/javascript">
+window.meilisearch = new MeiliSearch({
+    host: '{{ config:statamic:search:drivers:meilisearch:credentials:url }}',
+    apiKey: '{{ config:statamic:search:drivers:meilisearch:credentials:search_api_key }}',
+});
+</script>
 ```
 
 ### Search Settings
@@ -85,9 +109,29 @@ You may include may different types of settings in each index:
  ],
 ```
 
+### Common Errors
+
+#### 413 Request Entity Too Large
+
+You may encounter this bug on Laravel Forge for example, when you try sync the search documents for the first time. To overcome this you need to update the upload size limit in nginx.
+
+Add `client_max_body_size` to the http section on `/etc/nginx/nginx.conf`:
+
+```
+http {
+
+  client_max_body_size 100M;
+
+  // other settings
+
+}
+```
+
+Then restart the server, or run `sudo service nginx restart`.
+
 ### Quirks
 
-MeiliSearch can only index 1000 words... which isn't so great for long markdown articles. 
+MeiliSearch can only index 1000 words... which isn't so great for long markdown articles.
 
 #### Update
 As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/MeiliSearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
