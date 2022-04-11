@@ -96,10 +96,10 @@ class Index extends BaseIndex
         return $this;
     }
 
-    public function searchUsingApi($query)
+    public function searchUsingApi($query, $filters = [], $options = [])
     {
         try {
-            $searchResults = $this->getIndex()->search($query);
+            $searchResults = $this->getIndex()->search($query, $filters, $options);
         } catch (\Exception $e) {
             $this->handleMeiliSearchException($e);
         }
