@@ -2,10 +2,15 @@
 
 namespace Elvenstar\StatamicMeiliSearch\MeiliSearch;
 
+use Illuminate\Support\Str;
 use MeiliSearch\Exceptions\ApiException;
+use Statamic\Assets\Asset;
+use Statamic\Auth\User;
+use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
 use MeiliSearch\Client;
+use Statamic\Taxonomies\LocalizedTerm;
 
 class Index extends BaseIndex
 {
@@ -25,13 +30,16 @@ class Index extends BaseIndex
 
     public function insert($document)
     {
-        $fields = $this->searchables()->fields($document);
+        $fields = array_merge(
+            $this->searchables()->fields($document),
+            $this->getDefaultFields($document),
+        );
         $this->getIndex()->updateDocuments([$fields]);
     }
 
     public function delete($document)
     {
-        $this->getIndex()->deleteDocument($document->id());
+        $this->getIndex()->deleteDocument($this->getSafeDocmentID($document));
     }
 
     public function exists()
@@ -50,7 +58,7 @@ class Index extends BaseIndex
             if ($documents->isEmpty()) {
                 return true;
             }
-          
+
             return $this->getIndex()->updateDocuments($documents->all());
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -105,7 +113,7 @@ class Index extends BaseIndex
         }
 
         return collect($searchResults->getHits())->map(function ($hit) {
-            $hit['reference'] = $hit['id'];
+            $hit['reference'] = $hit['reference'] ?? $hit['id'];
 
             return $hit;
         });
@@ -118,7 +126,7 @@ class Index extends BaseIndex
 
     private function getDefaultFields($entry)
     {
-        $fields = ['id' => $entry->id()];
+        $fields = ['id' => $this->getSafeDocmentID($entry)];
 
         $entries = collect(['Statamic\Entries\Entry']);
         if ($entries->contains(get_class($entry))) {
@@ -142,5 +150,23 @@ class Index extends BaseIndex
         }
 
         throw $e;
+    }
+
+    /**
+     * Get the document ID for the given entry.
+     * As a document id is only allowed to be an integer or string composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_) we need to make sure that the ID is safe to use.
+     * More under https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id
+     *
+     * @param Entry|LocalizedTerm|Asset|User $entry
+     * @return string
+     */
+    private function getSafeDocmentID($entry)
+    {
+        return Str::of($entry->reference())
+            ->explode('::')
+            ->map(function ($part) {
+                return Str::slug($part);
+            })
+            ->implode('---');
     }
 }
