@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.1 - 2022-05-09
+
+### Changes
+
+- Some follow up changes after using changelog updater
+
 ## 1.0.0 - 2022-05-09
 
 In consultation with @tao, I have revised the adapter, and we present the first "stable" version.
@@ -31,6 +37,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
     ],
  ],
 
+
 ```
 - The Package Service Provider has been renamed to `StatamicMeiliSearchServiceProvider`. If you have problems updating, you may have to remove the package with `composer remove elvenstar/statamic-meilisearch` and add it again with `composer require elvenstar/statamic-meilisearch`.
 
@@ -38,4 +45,3 @@ In consultation with @tao, I have revised the adapter, and we present the first 
 
 - We have removed PHP support for versions older than 8.0.
 - We have removed Laravel support for versions older than 8.0.
-
