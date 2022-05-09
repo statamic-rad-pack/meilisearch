@@ -17,30 +17,13 @@ To work with v0.25 you would also install the matching driver:
 ### Few words about Document IDs in MeiliSearch
 
 When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
+You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
 
-As an Entry, Asset, User or Taxonomy ID is a combination of the handle and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
+As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
 
-As a Workaround, you need to add an extra key to your documents, containing the internal Statamic reference, so the entry can be resolved while searching. You need to add the `reference` field to your index `fields` configurations under `statamic/search.php`.
+As a Workaround, we take care add reference while indexing your entries automatically 🎉.
 
 Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resolve the corresponding Statamic Entry, Asset, User or Taxonomy.
-
-```php
-return [
-
-    // ...
-
-    'indexes' => [
-        'default' => [
-            'driver' => 'meilisearch',
-            'searchables' => ['*'],
-            // add the reference field to your index
-            'fields' => ['title', 'reference'],
-        ],
-    ],
-];
-```
-
-You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
 
 ### Installation
 
