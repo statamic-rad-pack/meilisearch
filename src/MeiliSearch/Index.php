@@ -112,11 +112,7 @@ class Index extends BaseIndex
             $this->handleMeiliSearchException($e, 'searchUsingApi');
         }
 
-        return collect($searchResults->getHits())->map(function ($hit) {
-            $hit['reference'] = $hit['reference'] ?? $hit['id'];
-
-            return $hit;
-        });
+        return collect($searchResults->getHits());
     }
 
     private function getIndex()
@@ -124,9 +120,12 @@ class Index extends BaseIndex
         return $this->client->index($this->name);
     }
 
-    private function getDefaultFields($entry)
+    private function getDefaultFields(Entry|LocalizedTerm|Asset|User $entry)
     {
-        return ['id' => $this->getSafeDocmentID($entry)];
+        return [
+            'id' => $this->getSafeDocmentID($entry->reference()),
+            'reference' =>$entry->reference(),
+        ];
     }
 
     private function handleMeiliSearchException($e, $method)
@@ -150,12 +149,12 @@ class Index extends BaseIndex
      * As a document id is only allowed to be an integer or string composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_) we need to make sure that the ID is safe to use.
      * More under https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id
      *
-     * @param Entry|LocalizedTerm|Asset|User $entry
+     * @param string $entryReference
      * @return string
      */
-    private function getSafeDocmentID($entry)
+    private function getSafeDocmentID(string $entryReference)
     {
-        return Str::of($entry->reference())
+        return Str::of($entryReference)
             ->explode('::')
             ->map(function ($part) {
                 return Str::slug($part);
