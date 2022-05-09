@@ -10,7 +10,7 @@ MeiliSearch driver uses a versioning system that matches MeiliSearch releases to
 
 To work with v0.25 you would also install the matching driver:
 
-```
+```json
 "elvenstar/statamic-meilisearch": "^0.25"
 ```
 
