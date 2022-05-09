@@ -11,6 +11,7 @@ use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
 use Statamic\Taxonomies\LocalizedTerm;
+use Statamic\Taxonomies\Term;
 
 class Index extends BaseIndex
 {
@@ -121,7 +122,7 @@ class Index extends BaseIndex
         return $this->client->index($this->name);
     }
 
-    private function getDefaultFields(Entry|LocalizedTerm|Asset|User $entry)
+    private function getDefaultFields(Entry|Term|LocalizedTerm|Asset|User $entry)
     {
         return [
             'id' => $this->getSafeDocmentID($entry->reference()),
