@@ -109,7 +109,7 @@ class Index extends BaseIndex
         try {
             $searchResults = $this->getIndex()->search($query, $filters, $options);
         } catch (\Exception $e) {
-            $this->handleMeiliSearchException($e);
+            $this->handleMeiliSearchException($e, 'searchUsingApi');
         }
 
         return collect($searchResults->getHits())->map(function ($hit) {
