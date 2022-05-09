@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.4 - 2022-05-09
 
-### Changed
+### Changed
 
 - Pass `reference` and not whole object to delete method.
 
