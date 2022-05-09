@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "meilisearch/meilisearch-php": "0.21.0",
+        "meilisearch/meilisearch-php": "^0.21|^0.22|^0.23",
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0"
     }
