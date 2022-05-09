@@ -3,13 +3,13 @@
 namespace Elvenstar\StatamicMeiliSearch\MeiliSearch;
 
 use Illuminate\Support\Str;
+use MeiliSearch\Client;
 use MeiliSearch\Exceptions\ApiException;
 use Statamic\Assets\Asset;
 use Statamic\Auth\User;
 use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
-use MeiliSearch\Client;
 use Statamic\Taxonomies\LocalizedTerm;
 
 class Index extends BaseIndex
@@ -46,6 +46,7 @@ class Index extends BaseIndex
     {
         try {
             $this->getIndex()->fetchRawInfo();
+
             return true;
         } catch (ApiException $e) {
             return false;
@@ -124,7 +125,7 @@ class Index extends BaseIndex
     {
         return [
             'id' => $this->getSafeDocmentID($entry->reference()),
-            'reference' =>$entry->reference(),
+            'reference' => $entry->reference(),
         ];
     }
 
