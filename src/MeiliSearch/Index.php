@@ -126,14 +126,7 @@ class Index extends BaseIndex
 
     private function getDefaultFields($entry)
     {
-        $fields = ['id' => $this->getSafeDocmentID($entry)];
-
-        $entries = collect(['Statamic\Entries\Entry']);
-        if ($entries->contains(get_class($entry))) {
-            $fields['collection'] = $entry->collectionHandle();
-        }
-
-        return $fields;
+        return ['id' => $this->getSafeDocmentID($entry)];
     }
 
     private function handleMeiliSearchException($e, $method)
