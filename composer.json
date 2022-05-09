@@ -1,21 +1,26 @@
 {
     "name": "elvenstar/statamic-meilisearch",
-    "autoload": {
-        "psr-4": {
-            "Elvenstar\\StatamicMeiliSearch\\": "src"
-        }
-    },
-    "extra": {
-        "statamic": {
-            "name": "Statamic Meilisearch",
-            "description": "Statamic Meilisearch addon"
+    "description": "Statamic Meilisearch addon",
+    "keywords": [
+        "spatie",
+        "laravel-ray"
+    ],
+    "homepage": "https://github.com/spatie/laravel-ray",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Shields",
+            "email": "daniel@karuna.co.za",
+            "homepage": "https://twitter.com/k4runa",
+            "role": "Developer"
         },
-        "laravel": {
-            "providers": [
-                "Elvenstar\\StatamicMeiliSearch\\ServiceProvider"
-            ]
+        {
+            "name": "Oliver Kaufmann",
+            "email": "okaufmann91@gmail.com",
+            "homepage": "https://twitter.com/okaufmannCH",
+            "role": "Co-Developer"
         }
-    },
+    ],
     "require": {
         "php": "^8.0",
         "meilisearch/meilisearch-php": "^0.21|^0.22|^0.23",
@@ -24,9 +29,39 @@
         "illuminate/support": "^8.0|^9.0",
         "statamic/cms": "^3.1|^3.2|^3.3"
     },
+    "require-dev": {
+        "orchestra/testbench-core": "^6.0|^7.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elvenstar\\StatamicMeiliSearch\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elvenstar\\StatamicMeiliSearch\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "php-cs-fixer fix --allow-risky=yes"
+    },
     "config": {
         "allow-plugins": {
             "pixelfear/composer-dist-plugin": true
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Meilisearch",
+            "description": "Statamic MeiliSearch addon"
+        },
+        "laravel": {
+            "providers": [
+                "Elvenstar\\StatamicMeiliSearch\\StatamicMeiliSearchServiceProvider"
+            ]
         }
     }
 }

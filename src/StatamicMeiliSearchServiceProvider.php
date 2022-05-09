@@ -2,11 +2,11 @@
 
 namespace Elvenstar\StatamicMeiliSearch;
 
+use MeiliSearch\Client;
 use Statamic\Facades\Search;
 use Statamic\Providers\AddonServiceProvider;
-use MeiliSearch\Client;
 
-class ServiceProvider extends AddonServiceProvider
+class StatamicMeiliSearchServiceProvider extends AddonServiceProvider
 {
     public function boot()
     {
