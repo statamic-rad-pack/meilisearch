@@ -1,11 +1,11 @@
 {
     "name": "elvenstar/statamic-meilisearch",
-    "description": "Statamic Meilisearch addon",
+    "description": "Statamic MeiliSearch addon",
     "keywords": [
         "spatie",
         "laravel-ray"
     ],
-    "homepage": "https://github.com/spatie/laravel-ray",
+    "homepage": "https://github.com/elvenstar/statamic-meilisearch",
     "license": "MIT",
     "authors": [
         {
