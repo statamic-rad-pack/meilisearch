@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Allow latest Meilisearch client - 2022-08-02
+
+### Changed
+
+- Allow use of latest meilisearch/meilisearch-php `v0.24.*`
+
+**Meilisearch 0.28 has a lot of breaking changes in its api. You may need to require an older Meilisearch Client if you use an older Version of Meilisearch.**
+
+**Full Changelog**: https://github.com/elvenstar/statamic-meilisearch/compare/1.0.6...1.1.0
+
 ## 1.0.6 - 2022-05-09
 
 ### Changed
@@ -74,6 +84,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
