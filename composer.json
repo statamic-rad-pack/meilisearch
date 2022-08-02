@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "meilisearch/meilisearch-php": "^0.21|^0.22|^0.23",
+        "meilisearch/meilisearch-php": "^0.21|^0.22|^0.23|^0.24",
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0",
         "illuminate/support": "^8.0|^9.0",
