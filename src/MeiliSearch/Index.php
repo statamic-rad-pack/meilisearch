@@ -80,7 +80,12 @@ class Index extends BaseIndex
     {
         try {
             $this->client->createIndex($this->name, ['primaryKey' => 'id']);
-            $this->getIndex()->updateSettings($this->config['settings'] ?? []);
+
+            if (! isset($this->config['settings'])) {
+                return;
+            }
+
+            $this->getIndex()->updateSettings($this->config['settings']);
         } catch (ApiException $e) {
             $this->handleMeiliSearchException($e, 'createIndex');
         }
