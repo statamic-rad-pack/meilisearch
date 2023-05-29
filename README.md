@@ -1,7 +1,5 @@
 # Statamic MeiliSearch Driver
 
-***Disclaimer: This search driver is used on a large production site, however MeiliSearch is still changing often, so some problems may occur. Please submit any bugs you find so we can make the driver more stable. If you would like to help maintain the driver, please reach out.***
-
 MeiliSearch driver uses a versioning system that matches MeiliSearch releases to try match releases with any breaking changes. For instance to work with v0.24 you would install the corresponding driver:
 
 ```json
