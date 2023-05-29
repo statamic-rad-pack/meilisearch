@@ -46,8 +46,8 @@ $ export MEILISEARCH_KEY=AWESOMESAUCE
 $ meilisearch
 
 # Generate the keys
-$ curl \
-  -H "X-Meili-API-Key: AWESOMESAUCE" \
+curl \
+  -H 'Authorization: Bearer AWESOMESAUCE' \
   -X GET 'http://localhost:7700/keys'
 ```
 
