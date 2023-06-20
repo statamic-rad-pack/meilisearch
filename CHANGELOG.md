@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0 - 2023-06-20
+
+### What's Changed
+
+- Allow new version of `meilisearch/meilisearch-php` by @Z3d0X in https://github.com/elvenstar/statamic-meilisearch/pull/10
+- Update for MS v1.0, Statamic 4.0 and Laravel 10 by @lakkes-ra in https://github.com/elvenstar/statamic-meilisearch/pull/13
+- Update Authorization Header in README by @lakkes-ra in https://github.com/elvenstar/statamic-meilisearch/pull/12
+
+### New Contributors
+
+- @Z3d0X made their first contribution in https://github.com/elvenstar/statamic-meilisearch/pull/10
+- @lakkes-ra made their first contribution in https://github.com/elvenstar/statamic-meilisearch/pull/13
+
+**Full Changelog**: https://github.com/elvenstar/statamic-meilisearch/compare/1.1.0...2.0.0
+
 ## Allow latest Meilisearch client - 2022-08-02
 
 ### Changed
@@ -84,6 +99,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
