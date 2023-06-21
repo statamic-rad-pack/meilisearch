@@ -1,17 +1,5 @@
 # Statamic MeiliSearch Driver
 
-MeiliSearch driver uses a versioning system that matches MeiliSearch releases to try match releases with any breaking changes. For instance to work with v0.24 you would install the corresponding driver:
-
-```json
-"elvenstar/statamic-meilisearch": "^0.24"
-```
-
-To work with v0.25 you would also install the matching driver:
-
-```json
-"elvenstar/statamic-meilisearch": "^0.25"
-```
-
 ### Few words about Document IDs in MeiliSearch
 
 When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
@@ -95,7 +83,7 @@ Any additional settings you want to define per index can be included in the `sta
 ],
 ```
 
-You may include may different types of settings in each index:
+You may include different types of settings in each index:
 
 ```php
 'articles' => [
