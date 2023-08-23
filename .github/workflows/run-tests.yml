@@ -31,6 +31,12 @@ jobs:
                     -   laravel: 10.*
                         statamic: 3.2.*
                         php: 8.2
+                    -   laravel: 9.*
+                        statamic: 3.3.*
+                        php: 8.2
+                    -   laravel: 9.*
+                        statamic: 3.2.*
+                        php: 8.2
 
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - S${{ matrix.statamic }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
