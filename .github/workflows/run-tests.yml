@@ -15,7 +15,7 @@ jobs:
                 os: [ubuntu-latest, windows-latest]
                 php: [8.2, 8.1]
                 laravel: [10.*, 9.*]
-                statamic: [4.*, 3.4.*]
+                statamic: [4.*, 3.4.*. 3.3.*, 3.2.*]
                 dependency-version: [prefer-stable]
                 include:
                     - laravel: 10.*
@@ -25,6 +25,10 @@ jobs:
                 exclude:
                     -   laravel: 10.*
                         statamic: 3.4.*
+                    -   laravel: 10.*
+                        statamic: 3.3.*
+                    -   laravel: 10.*
+                        statamic: 3.2.*
 
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - S${{ matrix.statamic }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
