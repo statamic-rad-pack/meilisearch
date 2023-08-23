@@ -15,7 +15,7 @@ jobs:
                 os: [ubuntu-latest, windows-latest]
                 php: [8.2, 8.1]
                 laravel: [10.*, 9.*]
-                statamic: [4.*, 3.4.*., 3.3.*, 3.2.*]
+                statamic: [4.*, 3.4.*, 3.3.*, 3.2.*]
                 dependency-version: [prefer-stable]
                 include:
                     - laravel: 10.*
