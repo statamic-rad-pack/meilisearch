@@ -106,6 +106,22 @@ You may include different types of settings in each index:
  ],
 ```
 
+### Extending
+
+You can extend the drivers functionality (e.g. in order to customize calls to meilisearch) by creating a class that extends
+`Elvenstar\StatamicMeiliSearch\MeiliSearch\Index` and instructing the DI-container to use it:
+
+```php
+class MyIndex extends Index {
+    // Your custom logic here
+}
+```
+
+```php
+// In your ServiceProvider
+$this->app->bind(\Elvenstar\StatamicMeiliSearch\MeiliSearch\Index::class, MyIndex::class);
+```
+
 ### Common Errors
 
 #### 413 Request Entity Too Large

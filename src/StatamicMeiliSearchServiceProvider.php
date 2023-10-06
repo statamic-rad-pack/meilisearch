@@ -2,7 +2,9 @@
 
 namespace Elvenstar\StatamicMeiliSearch;
 
-use MeiliSearch\Client;
+use Elvenstar\StatamicMeiliSearch\MeiliSearch\Index;
+use Illuminate\Foundation\Application;
+use Meilisearch\Client;
 use Statamic\Facades\Search;
 use Statamic\Providers\AddonServiceProvider;
 
@@ -32,14 +34,17 @@ class StatamicMeiliSearchServiceProvider extends AddonServiceProvider
 
     protected function bootSearchClient()
     {
-        Search::extend('meilisearch', function ($app, array $config, $name) {
-            $credentials = $config['credentials'];
-            $url = $credentials['url'];
-            $masterKey = $credentials['secret'];
+        Search::extend('meilisearch', function (Application $app, array $config, $name) {
+            $client = $app->makeWith(Client::class, [
+                'url' => $config['credentials']['url'],
+                'apiKey' => $config['credentials']['secret'],
+            ]);
 
-            $client = new Client($url, $masterKey);
-
-            return new MeiliSearch\Index($client, $name, $config);
+            return $app->makeWith(Index::class, [
+                'client' => $client,
+                'name' => $name,
+                'config' => $config,
+            ]);
         });
     }
 }
