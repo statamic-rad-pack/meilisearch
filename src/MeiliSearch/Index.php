@@ -7,6 +7,7 @@ use MeiliSearch\Client;
 use MeiliSearch\Exceptions\ApiException;
 use Statamic\Assets\Asset;
 use Statamic\Auth\User;
+use Statamic\Contracts\Search\Searchable;
 use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
@@ -127,11 +128,12 @@ class Index extends BaseIndex
         return $this->client->index($this->name);
     }
 
-    private function getDefaultFields(Entry|Term|LocalizedTerm|Asset|User $entry)
+    /** @return array<string, string> */
+    private function getDefaultFields(Searchable $entry): array
     {
         return [
-            'id' => $this->getSafeDocmentID($entry->reference()),
-            'reference' => $entry->reference(),
+            'id' => $this->getSafeDocmentID($entry->getSearchReference()),
+            'reference' => $entry->getSearchReference(),
         ];
     }
 
