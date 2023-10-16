@@ -11,7 +11,7 @@ This addon provides a [Mellisearch](https://www.meilisearch.com/) search driver 
 ### Installation
 
 ```bash
-composer require statamic-rad-pack/statamic-meilisearch
+composer require statamic-rad-pack/mellisearch
 ```
 
 Add the following variables to your env file:

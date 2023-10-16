@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 **Versions**
 You can use `composer show` to get the version numbers of:
-- statamic-rad-pack/statamic-meilisearch package version:
+- statamic-rad-pack/mellisearch package version:
 
 PHP version:
 Laravel version:

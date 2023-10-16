@@ -1,12 +1,12 @@
 {
-    "name": "statamic-rad-pack/statamic-meilisearch",
+    "name": "statamic-rad-pack/mellisearch",
     "description": "MelliSearch search driver for Statamic",
     "keywords": [
         "statamic",
         "mellisearch",
         "search"
     ],
-    "homepage": "https://github.com/statamic-rad-pack/statamic-meilisearch",
+    "homepage": "https://github.com/statamic-rad-pack/mellisearch",
     "license": "MIT",
     "authors": [
         {
