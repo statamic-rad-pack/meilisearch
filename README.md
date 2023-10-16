@@ -21,7 +21,7 @@ MEILISEARCH_HOST=http://127.0.0.1:7700
 MEILISEARCH_KEY=
 ```
 
-The master key is like a password, if you auto-deploy a meilisearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
+The master key is like a password, if you auto-deploy a Meilisearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
 
 ```bash
 # Export the key
@@ -45,9 +45,9 @@ Add the new driver to the `statamic/search.php` config file:
 
     'meilisearch' => [
         'credentials' => [
-            'url' => env('meilisearch_HOST', 'http://localhost:7700'),
-            'secret' => env('meilisearch_KEY', ''),
-            // 'search_api_key' => env('meilisearch_SEARCH_KEY')
+            'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+            'secret' => env('MEILISEARCH_KEY', ''),
+            // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
         ],
     ],
 ],
