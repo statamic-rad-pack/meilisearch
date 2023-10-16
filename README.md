@@ -14,7 +14,7 @@ Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resol
 ### Installation
 
 ```bash
-composer require elvenstar/statamic-meilisearch
+composer require statamic-rad-pack/statamic-meilisearch
 ```
 
 Add the following variables to your env file:

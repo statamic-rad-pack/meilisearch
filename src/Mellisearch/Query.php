@@ -1,6 +1,6 @@
 <?php
 
-namespace Elvenstar\StatamicMeiliSearch\MeiliSearch;
+namespace StatamicRadPack\Mellisearch\Meilisearch;
 
 use Statamic\Search\QueryBuilder;
 

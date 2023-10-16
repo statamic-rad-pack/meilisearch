@@ -1,11 +1,12 @@
 {
-    "name": "elvenstar/statamic-meilisearch",
-    "description": "Statamic MeiliSearch addon",
+    "name": "statamic-rad-pack/statamic-meilisearch",
+    "description": "MelliSearch search driver for Statamic",
     "keywords": [
-        "spatie",
-        "laravel-ray"
+        "statamic",
+        "mellisearch",
+        "search"
     ],
-    "homepage": "https://github.com/elvenstar/statamic-meilisearch",
+    "homepage": "https://github.com/statamic-rad-pack/statamic-meilisearch",
     "license": "MIT",
     "authors": [
         {
@@ -27,20 +28,20 @@
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0",
         "illuminate/support": "^9.0|^10.0",
-        "statamic/cms": "^3.2|^3.3|^3.4|^4.0"
+        "statamic/cms": "^4.0"
     },
     "require-dev": {
-        "orchestra/testbench-core": "^6.0|^7.0|^8.0",
+        "orchestra/testbench": "^7.0 || ^8.0",
         "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "psr-4": {
-            "Elvenstar\\StatamicMeiliSearch\\": "src"
+            "StatamicRadPack\\Mellisearch\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Elvenstar\\StatamicMeiliSearch\\Tests\\": "tests"
+            "StatamicRadPack\\Mellisearch\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -56,12 +57,12 @@
     },
     "extra": {
         "statamic": {
-            "name": "Statamic Meilisearch",
-            "description": "Statamic MeiliSearch addon"
+            "name": "Meilisearch",
+            "description": "MelliSearch search driver for Statamic"
         },
         "laravel": {
             "providers": [
-                "Elvenstar\\StatamicMeiliSearch\\StatamicMeiliSearchServiceProvider"
+                "StatamicRadPack\\Mellisearch\\ServiceProvider"
             ]
         }
     }
