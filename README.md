@@ -1,20 +1,17 @@
-# Statamic MeiliSearch Driver
+# Statamic Meilisearch Driver
 
-### Few words about Document IDs in MeiliSearch
+This addon provides a [Mellisearch](https://www.meilisearch.com/) search driver for Statamic sites.
 
-When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
-You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
+## Requirements
 
-As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
-
-As a Workaround, we take care add reference while indexing your entries automatically 🎉.
-
-Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resolve the corresponding Statamic Entry, Asset, User or Taxonomy.
+* PHP 8.1+
+* Laravel 9+
+* Statamic 4
 
 ### Installation
 
 ```bash
-composer require elvenstar/statamic-meilisearch
+composer require statamic-rad-pack/mellisearch
 ```
 
 Add the following variables to your env file:
@@ -42,18 +39,18 @@ curl \
 Add the new driver to the `statamic/search.php` config file:
 
 ```php
-    'drivers' => [
+'drivers' => [
 
-        // other drivers
+    // other drivers
 
-        'meilisearch' => [
-            'credentials' => [
-                'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-                'secret' => env('MEILISEARCH_KEY', ''),
-                // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
-            ],
+    'meilisearch' => [
+        'credentials' => [
+            'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+            'secret' => env('MEILISEARCH_KEY', ''),
+            // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
         ],
     ],
+],
 ```
 
 You can optionally add `search_api_key` which makes it easier to call the key on the frontend javascript code:
@@ -66,6 +63,17 @@ window.meilisearch = new MeiliSearch({
 });
 </script>
 ```
+
+### Few words about Document IDs in MeiliSearch
+
+When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
+You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
+
+As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
+
+As a Workaround, we take care add reference while indexing your entries automatically 🎉.
+
+Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resolve the corresponding Statamic Entry, Asset, User or Taxonomy.
 
 ### Search Settings
 
@@ -132,11 +140,8 @@ Add `client_max_body_size` to the http section on `/etc/nginx/nginx.conf`:
 
 ```
 http {
-
   client_max_body_size 100M;
-
   // other settings
-
 }
 ```
 
@@ -195,89 +200,89 @@ If you need a lot more fine-grained control, and need to break content down into
 
 ```php
 private function parseAll()
-    {
-        // disable search
-        Articles::withoutSyncingToSearch(function () {
-            // process all
-            $transcripts = Entry::query()
-                ->where('collection', 'articles')
-                ->where('published', true)
-                ->get()
-                ->each(function ($entry) {
-                    // push individual paragraphs or sentences to a collection
-                    $segments = $entries->customSplitMethod();
+{
+    // disable search
+    Articles::withoutSyncingToSearch(function () {
+        // process all
+        $transcripts = Entry::query()
+            ->where('collection', 'articles')
+            ->where('published', true)
+            ->get()
+            ->each(function ($entry) {
+                // push individual paragraphs or sentences to a collection
+                $segments = $entries->customSplitMethod();
 
-                    $segments->each(function ($data) {
-                        try {
-                            $article = new Article($data);
-                            $article->save();
-                        } catch (\Illuminate\Database\QueryException $e) {
-                            dd($e);
-                        }
-                    });
+                $segments->each(function ($data) {
+                    try {
+                        $article = new Article($data);
+                        $article->save();
+                    } catch (\Illuminate\Database\QueryException $e) {
+                        dd($e);
+                    }
                 });
-        });
+            });
+    });
 
-        $total = Article::all()->count();
-        $this->info("Imported {$total} entries into the articles index.");
+    $total = Article::all()->count();
+    $this->info("Imported {$total} entries into the articles index.");
 
-        $this->info("Bulk import the records with: ");
-        $this->info("php artisan scout:import \"App\Models\Article\" --chunk=100");
-    }
+    $this->info("Bulk import the records with: ");
+    $this->info("php artisan scout:import \"App\Models\Article\" --chunk=100");
+}
 ```
 
 4. Add some Listeners to the EventServiceProvider to watch for update or delete events on the collection (to keep it in sync)
 
 ```php
-    protected $listen = [
-        'Statamic\Events\EntrySaved' => [
-            'App\Listeners\ScoutArticleUpdated',
-        ],
-        'Statamic\Events\EntryDeleted' => [
-            'App\Listeners\ScoutArticleDeleted',
-        ],
-    ];
+protected $listen = [
+    'Statamic\Events\EntrySaved' => [
+        'App\Listeners\ScoutArticleUpdated',
+    ],
+    'Statamic\Events\EntryDeleted' => [
+        'App\Listeners\ScoutArticleDeleted',
+    ],
+];
 ```
 
 4. Create the Event Listeners, for example:
 
 ```php
-    public function handle(EntryDeleted $event)
-    {
-        if ($event->entry->collectionHandle() !== 'articles') return;
+public function handle(EntryDeleted $event)
+{
+    if ($event->entry->collectionHandle() !== 'articles') return;
 
-        // get the ID of the original transcript
-        $id = $event->entry->id();
+    // get the ID of the original transcript
+    $id = $event->entry->id();
 
-        // delete all from Scout with this origin ID
-        $paragraphs = Article::where('origin', $id);
-        $paragraphs->unsearchable();
-        $paragraphs->delete();
-    }
+    // delete all from Scout with this origin ID
+    $paragraphs = Article::where('origin', $id);
+    $paragraphs->unsearchable();
+    $paragraphs->delete();
+}
 
-    public function handle(EntrySaved $event)
-    {
-        // ... same as above ...
+public function handle(EntrySaved $event)
+{
+    // ... same as above ...
 
-        // if state:published
-        if (!$event->entry->published()) return;
+    // if state:published
+    if (!$event->entry->published()) return;
 
-        // TODO: split $event->entry into paragraphs again and save them to the database,
-        // they will re-sync automatically with the Searchables Trait.
-    }
+    // TODO: split $event->entry into paragraphs again and save them to the database,
+    // they will re-sync automatically with the Searchables Trait.
+}
 ```
 
 5. Create a placeholder, or empty index into the search config so you can create the index on MeiliSearch before importing the existing entries
 
 ```php
-        // required as a placeholder where we store the paragraphs later
-        'articles' => [
-            'driver' => 'meilisearch',
-            'searchables' => [], // empty
-            'settings' => [
-                'filterableAttributes' => ['type', 'entity', 'locale'],
-                'distinctAttribute' => 'origin', // if you only want to return one result per entry
-                // any search settings
-            ],
-         ],
+// required as a placeholder where we store the paragraphs later
+'articles' => [
+    'driver' => 'meilisearch',
+    'searchables' => [], // empty
+    'settings' => [
+        'filterableAttributes' => ['type', 'entity', 'locale'],
+        'distinctAttribute' => 'origin', // if you only want to return one result per entry
+        // any search settings
+    ],
+],
 ```
