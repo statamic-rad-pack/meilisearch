@@ -151,8 +151,8 @@ Then restart the server, or run `sudo service nginx restart`.
 
 MeiliSearch can only index 1000 words... which isn't so great for long markdown articles.
 
-#### Update
-As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/MeiliSearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
+> [!NOTE]
+> As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/MeiliSearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
 
 #### Solution 1
 On earlier versions, you can overcome this by breaking the content into smaller chunks:
