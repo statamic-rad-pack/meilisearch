@@ -39,18 +39,18 @@ curl \
 Add the new driver to the `statamic/search.php` config file:
 
 ```php
-    'drivers' => [
+'drivers' => [
 
-        // other drivers
+    // other drivers
 
-        'meilisearch' => [
-            'credentials' => [
-                'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-                'secret' => env('MEILISEARCH_KEY', ''),
-                // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
-            ],
+    'meilisearch' => [
+        'credentials' => [
+            'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+            'secret' => env('MEILISEARCH_KEY', ''),
+            // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
         ],
     ],
+],
 ```
 
 You can optionally add `search_api_key` which makes it easier to call the key on the frontend javascript code:
@@ -124,11 +124,8 @@ Add `client_max_body_size` to the http section on `/etc/nginx/nginx.conf`:
 
 ```
 http {
-
   client_max_body_size 100M;
-
   // other settings
-
 }
 ```
 
@@ -187,89 +184,89 @@ If you need a lot more fine-grained control, and need to break content down into
 
 ```php
 private function parseAll()
-    {
-        // disable search
-        Articles::withoutSyncingToSearch(function () {
-            // process all
-            $transcripts = Entry::query()
-                ->where('collection', 'articles')
-                ->where('published', true)
-                ->get()
-                ->each(function ($entry) {
-                    // push individual paragraphs or sentences to a collection
-                    $segments = $entries->customSplitMethod();
+{
+    // disable search
+    Articles::withoutSyncingToSearch(function () {
+        // process all
+        $transcripts = Entry::query()
+            ->where('collection', 'articles')
+            ->where('published', true)
+            ->get()
+            ->each(function ($entry) {
+                // push individual paragraphs or sentences to a collection
+                $segments = $entries->customSplitMethod();
 
-                    $segments->each(function ($data) {
-                        try {
-                            $article = new Article($data);
-                            $article->save();
-                        } catch (\Illuminate\Database\QueryException $e) {
-                            dd($e);
-                        }
-                    });
+                $segments->each(function ($data) {
+                    try {
+                        $article = new Article($data);
+                        $article->save();
+                    } catch (\Illuminate\Database\QueryException $e) {
+                        dd($e);
+                    }
                 });
-        });
+            });
+    });
 
-        $total = Article::all()->count();
-        $this->info("Imported {$total} entries into the articles index.");
+    $total = Article::all()->count();
+    $this->info("Imported {$total} entries into the articles index.");
 
-        $this->info("Bulk import the records with: ");
-        $this->info("php artisan scout:import \"App\Models\Article\" --chunk=100");
-    }
+    $this->info("Bulk import the records with: ");
+    $this->info("php artisan scout:import \"App\Models\Article\" --chunk=100");
+}
 ```
 
 4. Add some Listeners to the EventServiceProvider to watch for update or delete events on the collection (to keep it in sync)
 
 ```php
-    protected $listen = [
-        'Statamic\Events\EntrySaved' => [
-            'App\Listeners\ScoutArticleUpdated',
-        ],
-        'Statamic\Events\EntryDeleted' => [
-            'App\Listeners\ScoutArticleDeleted',
-        ],
-    ];
+protected $listen = [
+    'Statamic\Events\EntrySaved' => [
+        'App\Listeners\ScoutArticleUpdated',
+    ],
+    'Statamic\Events\EntryDeleted' => [
+        'App\Listeners\ScoutArticleDeleted',
+    ],
+];
 ```
 
 4. Create the Event Listeners, for example:
 
 ```php
-    public function handle(EntryDeleted $event)
-    {
-        if ($event->entry->collectionHandle() !== 'articles') return;
+public function handle(EntryDeleted $event)
+{
+    if ($event->entry->collectionHandle() !== 'articles') return;
 
-        // get the ID of the original transcript
-        $id = $event->entry->id();
+    // get the ID of the original transcript
+    $id = $event->entry->id();
 
-        // delete all from Scout with this origin ID
-        $paragraphs = Article::where('origin', $id);
-        $paragraphs->unsearchable();
-        $paragraphs->delete();
-    }
+    // delete all from Scout with this origin ID
+    $paragraphs = Article::where('origin', $id);
+    $paragraphs->unsearchable();
+    $paragraphs->delete();
+}
 
-    public function handle(EntrySaved $event)
-    {
-        // ... same as above ...
+public function handle(EntrySaved $event)
+{
+    // ... same as above ...
 
-        // if state:published
-        if (!$event->entry->published()) return;
+    // if state:published
+    if (!$event->entry->published()) return;
 
-        // TODO: split $event->entry into paragraphs again and save them to the database,
-        // they will re-sync automatically with the Searchables Trait.
-    }
+    // TODO: split $event->entry into paragraphs again and save them to the database,
+    // they will re-sync automatically with the Searchables Trait.
+}
 ```
 
 5. Create a placeholder, or empty index into the search config so you can create the index on MeiliSearch before importing the existing entries
 
 ```php
-        // required as a placeholder where we store the paragraphs later
-        'articles' => [
-            'driver' => 'meilisearch',
-            'searchables' => [], // empty
-            'settings' => [
-                'filterableAttributes' => ['type', 'entity', 'locale'],
-                'distinctAttribute' => 'origin', // if you only want to return one result per entry
-                // any search settings
-            ],
-         ],
+// required as a placeholder where we store the paragraphs later
+'articles' => [
+    'driver' => 'meilisearch',
+    'searchables' => [], // empty
+    'settings' => [
+        'filterableAttributes' => ['type', 'entity', 'locale'],
+        'distinctAttribute' => 'origin', // if you only want to return one result per entry
+        // any search settings
+    ],
+    ],
 ```
