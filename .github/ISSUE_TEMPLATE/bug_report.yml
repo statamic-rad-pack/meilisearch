@@ -28,6 +28,6 @@ body:
     required: true
 - type: input
   attributes:
-    label: Mellisearch Version
+    label: meilisearch Version
   validations:
     required: true

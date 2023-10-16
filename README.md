@@ -1,6 +1,6 @@
-# Statamic Meilisearch Driver
+# Statamic meilisearch Driver
 
-This addon provides a [Mellisearch](https://www.meilisearch.com/) search driver for Statamic sites.
+This addon provides a [meilisearch](https://www.meilisearch.com/) search driver for Statamic sites.
 
 ## Requirements
 
@@ -11,21 +11,21 @@ This addon provides a [Mellisearch](https://www.meilisearch.com/) search driver 
 ### Installation
 
 ```bash
-composer require statamic-rad-pack/mellisearch
+composer require statamic-rad-pack/meilisearch
 ```
 
 Add the following variables to your env file:
 
 ```txt
-MEILISEARCH_HOST=http://127.0.0.1:7700
-MEILISEARCH_KEY=
+meilisearch_HOST=http://127.0.0.1:7700
+meilisearch_KEY=
 ```
 
-The master key is like a password, if you auto-deploy a MeiliSearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
+The master key is like a password, if you auto-deploy a meilisearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
 
 ```bash
 # Export the key
-$ export MEILISEARCH_KEY=AWESOMESAUCE
+$ export meilisearch_KEY=AWESOMESAUCE
 
 # Start the meilisearch server again
 $ meilisearch
@@ -45,9 +45,9 @@ Add the new driver to the `statamic/search.php` config file:
 
     'meilisearch' => [
         'credentials' => [
-            'url' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-            'secret' => env('MEILISEARCH_KEY', ''),
-            // 'search_api_key' => env('MEILISEARCH_SEARCH_KEY')
+            'url' => env('meilisearch_HOST', 'http://localhost:7700'),
+            'secret' => env('meilisearch_KEY', ''),
+            // 'search_api_key' => env('meilisearch_SEARCH_KEY')
         ],
     ],
 ],
@@ -57,18 +57,18 @@ You can optionally add `search_api_key` which makes it easier to call the key on
 
 ```html
 <script type="text/javascript">
-window.meilisearch = new MeiliSearch({
+window.meilisearch = new meilisearch({
     host: '{{ config:statamic:search:drivers:meilisearch:credentials:url }}',
     apiKey: '{{ config:statamic:search:drivers:meilisearch:credentials:search_api_key }}',
 });
 </script>
 ```
 
-### Few words about Document IDs in MeiliSearch
+### Few words about Document IDs in meilisearch
 
-When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_). You can read more about this in the [MeiliSearch documentation](https://www.meilisearch.com/docs/learn/core_concepts/primary_key#invalid_document_id)
+When you index your Statamic Entries, the driver will always transform the ID. This is required because meilisearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_). You can read more about this in the [meilisearch documentation](https://www.meilisearch.com/docs/learn/core_concepts/primary_key#invalid_document_id)
 
-As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
+As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by meilisearch.
 
 As a Workaround, we take care add reference while indexing your entries automatically 🎉.
 
@@ -116,7 +116,7 @@ You may include different types of settings in each index:
 ### Extending
 
 You can extend the drivers functionality (e.g. in order to customize calls to meilisearch) by creating a class that extends
-`StatamicRadPack\Mellisearch\Meilisearch\Index` and instructing Laravel's [service container](https://laravel.com/docs/master/container#main-content) to use it:
+`StatamicRadPack\meilisearch\meilisearch\Index` and instructing Laravel's [service container](https://laravel.com/docs/master/container#main-content) to use it:
 
 ```php
 class MyIndex extends Index {
@@ -127,7 +127,7 @@ class MyIndex extends Index {
 ```php
 // app/Providers/AppServiceProvider.php
 
-$this->app->bind(\StatamicRadPack\Mellisearch\Meilisearch\Index::class, MyIndex::class);
+$this->app->bind(\StatamicRadPack\meilisearch\meilisearch\Index::class, MyIndex::class);
 ```
 
 ### Common Errors
@@ -149,10 +149,10 @@ Then restart the server, or run `sudo service nginx restart`.
 
 ### Quirks
 
-MeiliSearch can only index 1000 words... which isn't so great for long markdown articles.
+meilisearch can only index 1000 words... which isn't so great for long markdown articles.
 
 > [!NOTE]
-> As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/MeiliSearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
+> As of version 0.24.0 the 1000 word limit [no longer exists](https://github.com/meilisearch/meilisearch/issues/1770) on documents, which makes the driver a lot more suited for longer markdown files you may use on Statamic.
 
 #### Solution 1
 On earlier versions, you can overcome this by breaking the content into smaller chunks:
@@ -192,7 +192,7 @@ This will create a few extra fields like `content_1`, `content_2`, ... `content_
 
 
 #### Solution 2
-If you need a lot more fine-grained control, and need to break content down into paragraphs or even sentences. You could use a artisan command to parse the entries in a Statamic collection, split the content and store it in a database. Then sync the individual items to MeiliSearch using the `php artisan scout:import` command.
+If you need a lot more fine-grained control, and need to break content down into paragraphs or even sentences. You could use a artisan command to parse the entries in a Statamic collection, split the content and store it in a database. Then sync the individual items to meilisearch using the `php artisan scout:import` command.
 
 1. Create a new database migration (make sure the migration has an origin UUID so you can link them to the parent entry)
 2. Create a new Model and add the `searchables` trait from Scout.
@@ -272,7 +272,7 @@ public function handle(EntrySaved $event)
 }
 ```
 
-5. Create a placeholder, or empty index into the search config so you can create the index on MeiliSearch before importing the existing entries
+5. Create a placeholder, or empty index into the search config so you can create the index on meilisearch before importing the existing entries
 
 ```php
 // required as a placeholder where we store the paragraphs later

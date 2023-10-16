@@ -1,9 +1,9 @@
 <?php
 
-namespace StatamicRadPack\Mellisearch\Tests;
+namespace StatamicRadPack\meilisearch\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use StatamicRadPack\Mellisearch\ServiceProvider;
+use StatamicRadPack\meilisearch\ServiceProvider;
 
 class TestCase extends Orchestra
 {

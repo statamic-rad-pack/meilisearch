@@ -1,12 +1,12 @@
 {
-    "name": "statamic-rad-pack/mellisearch",
-    "description": "Mellisearch search driver for Statamic",
+    "name": "statamic-rad-pack/meilisearch",
+    "description": "meilisearch search driver for Statamic",
     "keywords": [
         "statamic",
-        "mellisearch",
+        "meilisearch",
         "search"
     ],
-    "homepage": "https://github.com/statamic-rad-pack/mellisearch",
+    "homepage": "https://github.com/statamic-rad-pack/meilisearch",
     "license": "MIT",
     "authors": [
         {
@@ -36,12 +36,12 @@
     },
     "autoload": {
         "psr-4": {
-            "StatamicRadPack\\Mellisearch\\": "src"
+            "StatamicRadPack\\meilisearch\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "StatamicRadPack\\Mellisearch\\Tests\\": "tests"
+            "StatamicRadPack\\meilisearch\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -57,12 +57,12 @@
     },
     "extra": {
         "statamic": {
-            "name": "Meilisearch",
-            "description": "Mellisearch search driver for Statamic"
+            "name": "meilisearch",
+            "description": "meilisearch search driver for Statamic"
         },
         "laravel": {
             "providers": [
-                "StatamicRadPack\\Mellisearch\\ServiceProvider"
+                "StatamicRadPack\\meilisearch\\ServiceProvider"
             ]
         }
     },

@@ -1,10 +1,10 @@
 <?php
 
-namespace StatamicRadPack\Mellisearch\Meilisearch;
+namespace StatamicRadPack\meilisearch\meilisearch;
 
 use Illuminate\Support\Str;
-use MeiliSearch\Client;
-use MeiliSearch\Exceptions\ApiException;
+use meilisearch\Client;
+use meilisearch\Exceptions\ApiException;
 use Statamic\Contracts\Search\Searchable;
 use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
@@ -69,7 +69,7 @@ class Index extends BaseIndex
         try {
             $this->getIndex()->delete();
         } catch (ApiException $e) {
-            $this->handleMeiliSearchException($e, 'deleteIndex');
+            $this->handlemeilisearchException($e, 'deleteIndex');
         }
     }
 
@@ -84,7 +84,7 @@ class Index extends BaseIndex
 
             $this->getIndex()->updateSettings($this->config['settings']);
         } catch (ApiException $e) {
-            $this->handleMeiliSearchException($e, 'createIndex');
+            $this->handlemeilisearchException($e, 'createIndex');
         }
     }
 
@@ -113,7 +113,7 @@ class Index extends BaseIndex
         try {
             $searchResults = $this->getIndex()->search($query, $filters, $options);
         } catch (\Exception $e) {
-            $this->handleMeiliSearchException($e, 'searchUsingApi');
+            $this->handlemeilisearchException($e, 'searchUsingApi');
         }
 
         return collect($searchResults->getHits());
@@ -132,7 +132,7 @@ class Index extends BaseIndex
         ];
     }
 
-    private function handleMeiliSearchException($e, $method)
+    private function handlemeilisearchException($e, $method)
     {
         // custom error parsing for meilisearch exceptions
         if ($e->errorCode === 'index_already_exists' && $method === 'createIndex') {
