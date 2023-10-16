@@ -65,5 +65,8 @@
                 "StatamicRadPack\\Mellisearch\\ServiceProvider"
             ]
         }
+    },
+    "conflict": {
+        "elvenstar/statamic-meilisearch": "*"
     }
 }
