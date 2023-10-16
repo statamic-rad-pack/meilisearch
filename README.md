@@ -1,6 +1,6 @@
-# Statamic meilisearch Driver
+# Statamic Meilisearch Driver
 
-This addon provides a [meilisearch](https://www.meilisearch.com/) search driver for Statamic sites.
+This addon provides a [Meilisearch](https://www.meilisearch.com/) search driver for Statamic sites.
 
 ## Requirements
 
@@ -17,15 +17,15 @@ composer require statamic-rad-pack/meilisearch
 Add the following variables to your env file:
 
 ```txt
-meilisearch_HOST=http://127.0.0.1:7700
-meilisearch_KEY=
+MEILISEARCH_HOST=http://127.0.0.1:7700
+MEILISEARCH_KEY=
 ```
 
 The master key is like a password, if you auto-deploy a meilisearch server they will most likely provide you with keys. On localhost you can make up your own master key then use that to generate your private and public keys. You will need these keys for front-end clients:
 
 ```bash
 # Export the key
-$ export meilisearch_KEY=AWESOMESAUCE
+$ export MEILISEARCH_KEY=AWESOMESAUCE
 
 # Start the meilisearch server again
 $ meilisearch
