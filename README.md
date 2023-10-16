@@ -268,5 +268,5 @@ public function handle(EntrySaved $event)
         'distinctAttribute' => 'origin', // if you only want to return one result per entry
         // any search settings
     ],
-    ],
+],
 ```
