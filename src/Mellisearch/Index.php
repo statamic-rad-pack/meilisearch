@@ -1,6 +1,6 @@
 <?php
 
-namespace Elvenstar\StatamicMeiliSearch\MeiliSearch;
+namespace StatamicRadPack\Mellisearch\Meilisearch;
 
 use Illuminate\Support\Str;
 use MeiliSearch\Client;
@@ -156,7 +156,6 @@ class Index extends BaseIndex
      * As a document id is only allowed to be an integer or string composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_) we need to make sure that the ID is safe to use.
      * More under https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id
      *
-     * @param string $entryReference
      * @return string
      */
     private function getSafeDocmentID(string $entryReference)
