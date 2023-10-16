@@ -20,7 +20,8 @@ The Mellisearch addon is now part of [The Rad Pack](https://github.com/statamic-
 
 ### Breaking changes
 
-* This addon is now part of The Rad Pack 🎉 #21 by @duncanmcclean
+* This addon *only* supports Statamic 4 now
+* The package name has changed to `statamic-rad-pack/mellisearch`
 
 ## 2.0.1 - 2023-08-23
 
