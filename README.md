@@ -1,15 +1,12 @@
-# Statamic MeiliSearch Driver
+# Statamic Meilisearch Driver
 
-### Few words about Document IDs in MeiliSearch
+This addon provides a [Mellisearch](https://www.meilisearch.com/) search driver for Statamic sites.
 
-When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
-You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
+## Requirements
 
-As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
-
-As a Workaround, we take care add reference while indexing your entries automatically 🎉.
-
-Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resolve the corresponding Statamic Entry, Asset, User or Taxonomy.
+* PHP 8.1+
+* Laravel 9+
+* Statamic 4
 
 ### Installation
 
@@ -66,6 +63,17 @@ window.meilisearch = new MeiliSearch({
 });
 </script>
 ```
+
+### Few words about Document IDs in MeiliSearch
+
+When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
+You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
+
+As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
+
+As a Workaround, we take care add reference while indexing your entries automatically 🎉.
+
+Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resolve the corresponding Statamic Entry, Asset, User or Taxonomy.
 
 ### Search Settings
 
