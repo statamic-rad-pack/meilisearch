@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.0.0 (2023-10-16)
+
+The Mellisearch addon is now part of [The Rad Pack](https://github.com/statamic-rad-pack). As part of this, please run the following commands when upgrading:
+
+1. `composer remove elvenstar/statamic-meilisearch`
+2. `composer require statamic-rad-pack/mellisearch`
+
+### What's new
+
+* You can now extend the `Index` class #20 by @j6s
+
+### What's fixed
+
+* Use getSearchReference method instead of reference #18 by @duncanmcclean
+* The `Searchable` interface is now used in place of concrete implementations #19 by @j6s
+
+### Breaking changes
+
+* This addon is now part of The Rad Pack 🎉 #21 by @duncanmcclean
+
 ## 2.0.1 - 2023-08-23
 
 ### What's Changed
