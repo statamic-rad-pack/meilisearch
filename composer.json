@@ -1,6 +1,6 @@
 {
     "name": "statamic-rad-pack/mellisearch",
-    "description": "MelliSearch search driver for Statamic",
+    "description": "Mellisearch search driver for Statamic",
     "keywords": [
         "statamic",
         "mellisearch",
@@ -58,7 +58,7 @@
     "extra": {
         "statamic": {
             "name": "Meilisearch",
-            "description": "MelliSearch search driver for Statamic"
+            "description": "Mellisearch search driver for Statamic"
         },
         "laravel": {
             "providers": [
