@@ -114,6 +114,23 @@ You may include different types of settings in each index:
  ],
 ```
 
+### Extending
+
+You can extend the drivers functionality (e.g. in order to customize calls to meilisearch) by creating a class that extends
+`StatamicRadPack\Mellisearch\Meilisearch\Index` and instructing Laravel's [service container](https://laravel.com/docs/master/container#main-content) to use it:
+
+```php
+class MyIndex extends Index {
+    // Your custom logic here
+}
+```
+
+```php
+// app/Providers/AppServiceProvider.php
+
+$this->app->bind(\StatamicRadPack\Mellisearch\Meilisearch\Index::class, MyIndex::class);
+```
+
 ### Common Errors
 
 #### 413 Request Entity Too Large
