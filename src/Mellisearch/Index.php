@@ -5,14 +5,10 @@ namespace StatamicRadPack\Mellisearch\Meilisearch;
 use Illuminate\Support\Str;
 use MeiliSearch\Client;
 use MeiliSearch\Exceptions\ApiException;
-use Statamic\Assets\Asset;
-use Statamic\Auth\User;
 use Statamic\Contracts\Search\Searchable;
 use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
-use Statamic\Taxonomies\LocalizedTerm;
-use Statamic\Taxonomies\Term;
 
 class Index extends BaseIndex
 {
@@ -128,7 +124,6 @@ class Index extends BaseIndex
         return $this->client->index($this->name);
     }
 
-    /** @return array<string, string> */
     private function getDefaultFields(Searchable $entry): array
     {
         return [
