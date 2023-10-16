@@ -66,8 +66,7 @@ window.meilisearch = new MeiliSearch({
 
 ### Few words about Document IDs in MeiliSearch
 
-When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_).
-You can read more about this in the [MeiliSearch documentation](https://docs.meilisearch.com/reference/api/error_codes.html#invalid-document-id)
+When you index your Statamic Entries, the driver will always transform the ID. This is required because MeiliSearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_). You can read more about this in the [MeiliSearch documentation](https://www.meilisearch.com/docs/learn/core_concepts/primary_key#invalid_document_id)
 
 As an Entry, Asset, User or Taxonomy reference is a combination of the type, handle/container and ID separated with a `::` (e.g. assets::heros/human01.jpg, categories::cats) this could not be indexed by MeiliSearch.
 
