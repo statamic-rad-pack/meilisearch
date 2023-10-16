@@ -40,7 +40,7 @@ class Index extends BaseIndex
 
     public function delete($document)
     {
-        $this->getIndex()->deleteDocument($this->getSafeDocmentID($document->reference()));
+        $this->getIndex()->deleteDocument($this->getSafeDocmentID($document->getSearchReference()));
     }
 
     public function exists()
