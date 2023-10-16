@@ -29,6 +29,5 @@ body:
 - type: input
   attributes:
     label: Mellisearch Version
-    description: Copy & paste the output of `php please support:details` here.
   validations:
     required: true
