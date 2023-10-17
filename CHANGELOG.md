@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.0.1 (2023-10-17)
+
+### What's fixed
+
+* Fixed typo in the package name #23 by @ryanmitchell
+
 ## v3.0.0 (2023-10-16)
 
 The meilisearch addon is now part of [The Rad Pack](https://github.com/statamic-rad-pack). As part of this, please run the following commands when upgrading:
