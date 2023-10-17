@@ -114,6 +114,23 @@ You may include different types of settings in each index:
  ],
 ```
 
+### Search Pagination
+
+By default we limit the `maxTotalHits` to 1000000, if you want to modify this or any other pagination settings on the index, specify a pagination key:
+
+```php
+// articles
+'articles' => [
+    'driver' => 'meilisearch',
+    'searchables' => ['collection:articles'],
+    'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
+    'pagination' => [
+      'maxTotalHits' => 100,
+    ],
+],
+```
+
+
 ### Extending
 
 You can extend the drivers functionality (e.g. in order to customize calls to meilisearch) by creating a class that extends

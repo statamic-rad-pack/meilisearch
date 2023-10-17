@@ -36,7 +36,7 @@ class Index extends BaseIndex
 
     public function delete($document)
     {
-        $this->getIndex()->deleteDocument($this->getSafeDocmentID($document->getSearchReference()));
+        $this->getIndex()->deleteDocument($this->getSafeDocumentID($document->getSearchReference()));
     }
 
     public function exists()
@@ -82,6 +82,7 @@ class Index extends BaseIndex
             }
 
             $this->getIndex()->updateSettings($this->config['settings']);
+            $this->getIndex()->updatePagination($this->config['pagination'] ?? ['maxTotalHits' => 1000000]);
         } catch (ApiException $e) {
             $this->handlemeilisearchException($e, 'createIndex');
         }
@@ -107,10 +108,10 @@ class Index extends BaseIndex
         return $this;
     }
 
-    public function searchUsingApi($query, $filters = [], $options = [])
+    public function searchUsingApi($query, $options = ['hitsPerPage' => 1000000])
     {
         try {
-            $searchResults = $this->getIndex()->search($query, $filters, $options);
+            $searchResults = $this->getIndex()->search($query, $options);
         } catch (\Exception $e) {
             $this->handlemeilisearchException($e, 'searchUsingApi');
         }
@@ -126,7 +127,7 @@ class Index extends BaseIndex
     private function getDefaultFields(Searchable $entry): array
     {
         return [
-            'id' => $this->getSafeDocmentID($entry->getSearchReference()),
+            'id' => $this->getSafeDocumentID($entry->getSearchReference()),
             'reference' => $entry->getSearchReference(),
         ];
     }
@@ -154,7 +155,7 @@ class Index extends BaseIndex
      *
      * @return string
      */
-    private function getSafeDocmentID(string $entryReference)
+    private function getSafeDocumentID(string $entryReference)
     {
         return Str::of($entryReference)
             ->explode('::')
