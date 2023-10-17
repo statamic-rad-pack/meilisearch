@@ -116,7 +116,7 @@ You may include different types of settings in each index:
 
 ### Search Pagination
 
-By default we limit the `maxTotalHits` to 1000000, if you want to modify this or any other pagination settings on the indedx, specify a pagination key:
+By default we limit the `maxTotalHits` to 1000000, if you want to modify this or any other pagination settings on the index, specify a pagination key:
 
 ```php
 // articles
