@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## v3.0.2 (2023-10-17)
 
-### What's improved
+### What's new
 
 * You can now use `maxTotalHits` and `hitsPerPage` options when configuring indexes #24 by @ryanmitchell
 
