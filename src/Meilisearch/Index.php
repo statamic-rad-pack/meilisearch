@@ -1,12 +1,11 @@
 <?php
 
-namespace StatamicRadPack\meilisearch\meilisearch;
+namespace StatamicRadPack\Meilisearch\Meilisearch;
 
 use Illuminate\Support\Str;
-use meilisearch\Client;
-use meilisearch\Exceptions\ApiException;
+use Meilisearch\Client;
+use Meilisearch\Exceptions\ApiException;
 use Statamic\Contracts\Search\Searchable;
-use Statamic\Entries\Entry;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
 

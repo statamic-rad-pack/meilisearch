@@ -36,12 +36,12 @@
     },
     "autoload": {
         "psr-4": {
-            "StatamicRadPack\\meilisearch\\": "src"
+            "StatamicRadPack\\Meilisearch\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "StatamicRadPack\\meilisearch\\Tests\\": "tests"
+            "StatamicRadPack\\Meilisearch\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -56,17 +56,14 @@
         }
     },
     "extra": {
-        "statamic": {
-            "name": "meilisearch",
-            "description": "meilisearch search driver for Statamic"
-        },
         "laravel": {
             "providers": [
-                "StatamicRadPack\\meilisearch\\ServiceProvider"
+                "StatamicRadPack\\Meilisearch\\ServiceProvider"
             ]
+        },
+        "statamic": {
+            "name": "Meilisearch",
+            "description": "Meilisearch search driver for Statamic"
         }
-    },
-    "conflict": {
-        "elvenstar/statamic-meilisearch": "*"
     }
 }
