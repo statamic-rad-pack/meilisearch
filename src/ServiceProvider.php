@@ -1,9 +1,9 @@
 <?php
 
-namespace StatamicRadPack\meilisearch;
+namespace StatamicRadPack\Meilisearch;
 
 use Illuminate\Foundation\Application;
-use meilisearch\Client;
+use Meilisearch\Client;
 use Statamic\Facades\Search;
 use Statamic\Providers\AddonServiceProvider;
 
@@ -17,7 +17,7 @@ class ServiceProvider extends AddonServiceProvider
                 'apiKey' => $config['credentials']['secret'],
             ]);
 
-            return $app->makeWith(meilisearch\Index::class, [
+            return $app->makeWith(Meilisearch\Index::class, [
                 'client' => $client,
                 'name' => $name,
                 'config' => $config,
