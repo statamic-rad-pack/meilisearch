@@ -1,6 +1,6 @@
 <?php
 
-namespace StatamicRadPack\meilisearch\meilisearch;
+namespace StatamicRadPack\Meilisearch\Meilisearch;
 
 use Statamic\Search\QueryBuilder;
 
