@@ -108,7 +108,7 @@ class Index extends BaseIndex
         return $this;
     }
 
-    public function searchUsingApi($query, $options = ['hitsPerPage' => 1000000])
+    public function searchUsingApi($query, $options = ['hitsPerPage' => 1000000, 'showRankingScore' => true])
     {
         try {
             $searchResults = $this->getIndex()->search($query, $options);
@@ -116,7 +116,12 @@ class Index extends BaseIndex
             $this->handlemeilisearchException($e, 'searchUsingApi');
         }
 
-        return collect($searchResults->getHits());
+        collect($searchResults->getHits())->map(function ($hit) {
+            $hit['search_score'] = (int) ceil($hit['_rankingScore'] * 1000);
+            unset($hit['_rankingScore']);
+
+            return $hit;
+        });
     }
 
     private function getIndex()
