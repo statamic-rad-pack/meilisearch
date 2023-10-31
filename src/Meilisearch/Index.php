@@ -116,7 +116,7 @@ class Index extends BaseIndex
             $this->handlemeilisearchException($e, 'searchUsingApi');
         }
 
-        collect($searchResults->getHits())->map(function ($hit) {
+        return collect($searchResults->getHits())->map(function ($hit) {
             $hit['search_score'] = (int) ceil($hit['_rankingScore'] * 1000);
             unset($hit['_rankingScore']);
 
