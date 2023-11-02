@@ -2,6 +2,7 @@
 
 namespace StatamicRadPack\Meilisearch\Meilisearch;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Meilisearch\Client;
 use Meilisearch\Exceptions\ApiException;
@@ -108,12 +109,12 @@ class Index extends BaseIndex
         return $this;
     }
 
-    public function searchUsingApi($query, $options = ['hitsPerPage' => 1000000])
+    public function searchUsingApi($query, array $options = ['hitsPerPage' => 1000000, 'showRankingScore' => true]): Collection
     {
         try {
             $searchResults = $this->getIndex()->search($query, $options);
         } catch (\Exception $e) {
-            $this->handlemeilisearchException($e, 'searchUsingApi');
+            $this->handleMeilisearchException($e, 'searchUsingApi');
         }
 
         return collect($searchResults->getHits());
@@ -132,16 +133,18 @@ class Index extends BaseIndex
         ];
     }
 
-    private function handlemeilisearchException($e, $method)
+    /**
+     * Custom error parsing for Meilisearch exceptions.
+     */
+    private function handleMeilisearchException($e, $method)
     {
-        // custom error parsing for meilisearch exceptions
+        // Ignore if already created.
         if ($e->errorCode === 'index_already_exists' && $method === 'createIndex') {
-            // ignore if already created
             return true;
         }
 
+        // Ignore if not found.
         if ($e->errorCode === 'index_not_found' && $method === 'deleteIndex') {
-            // ignore if not found
             return true;
         }
 
