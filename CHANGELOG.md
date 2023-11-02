@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.0.3 (2023-11-02)
+
+### What's improved
+
+* Results will now be sorted using the search score from Meilisearch #26 by @robbanl
+
 ## v3.0.2 (2023-10-17)
 
 ### What's new
