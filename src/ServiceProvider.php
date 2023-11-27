@@ -11,7 +11,7 @@ class ServiceProvider extends AddonServiceProvider
 {
     public function bootAddon()
     {
-        Search::extend('meilisearch', function (Application $app, array $config, $name) {
+        Search::extend('meilisearch', function (Application $app, array $config, $name, $locale = null) {
             $client = $app->makeWith(Client::class, [
                 'url' => $config['credentials']['url'],
                 'apiKey' => $config['credentials']['secret'],
@@ -21,6 +21,7 @@ class ServiceProvider extends AddonServiceProvider
                 'client' => $client,
                 'name' => $name,
                 'config' => $config,
+                'locale' => $locale,
             ]);
         });
     }
