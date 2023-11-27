@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.1.0 (2023-11-27)
+
+### What's new
+
+* Site based indexes are now supported #28 #29 by @ryanmitchell
+
 ## v3.0.3 (2023-11-02)
 
 ### What's improved
