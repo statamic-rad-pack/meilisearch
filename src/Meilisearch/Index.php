@@ -14,7 +14,7 @@ class Index extends BaseIndex
 {
     protected $client;
 
-    public function __construct(Client $client, $name, array $config, string $locale = null)
+    public function __construct(Client $client, $name, array $config, ?string $locale = null)
     {
         $this->client = $client;
 
