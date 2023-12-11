@@ -32,7 +32,15 @@ class Index extends BaseIndex
             $this->searchables()->fields($document),
             $this->getDefaultFields($document),
         );
+
         $this->getIndex()->updateDocuments([$fields]);
+    }
+
+    public function insertMultiple($documents)
+    {
+        $documents->each(fn ($document) => $this->insert($document));
+
+        return $this;
     }
 
     public function delete($document)
@@ -53,15 +61,7 @@ class Index extends BaseIndex
 
     protected function insertDocuments(Documents $documents)
     {
-        try {
-            if ($documents->isEmpty()) {
-                return true;
-            }
-
-            return $this->getIndex()->updateDocuments($documents->all());
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        // we dont use this, but the abstract class requires it
     }
 
     protected function deleteIndex()
@@ -94,17 +94,7 @@ class Index extends BaseIndex
         $this->deleteIndex();
         $this->createIndex();
 
-        // Prepare documents for update
-        $searchables = $this->searchables()->all()->map(function ($entry) {
-            return array_merge(
-                $this->searchables()->fields($entry),
-                $this->getDefaultFields($entry),
-            );
-        });
-
-        // Update documents
-        $documents = new Documents($searchables);
-        $this->insertDocuments($documents);
+        $this->searchables()->lazy()->each(fn ($searchables) => $this->insertMultiple($searchables));
 
         return $this;
     }
