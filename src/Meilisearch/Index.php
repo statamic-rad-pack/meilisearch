@@ -28,17 +28,17 @@ class Index extends BaseIndex
 
     public function insert($document)
     {
-        $fields = array_merge(
-            $this->searchables()->fields($document),
-            $this->getDefaultFields($document),
-        );
-
-        $this->getIndex()->updateDocuments([$fields]);
+        return $this->insertMultiple(collect($document));
     }
 
     public function insertMultiple($documents)
     {
-        $documents->each(fn ($document) => $this->insert($document));
+        $documents->map(fn ($document) => array_merge(
+            $this->searchables()->fields($document),
+            $this->getDefaultFields($document),
+        ));
+
+        $this->getIndex()->updateDocuments($documents);
 
         return $this;
     }
