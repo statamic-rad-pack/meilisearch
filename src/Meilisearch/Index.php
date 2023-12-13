@@ -33,12 +33,16 @@ class Index extends BaseIndex
 
     public function insertMultiple($documents)
     {
-        $documents->map(fn ($document) => array_merge(
-            $this->searchables()->fields($document),
-            $this->getDefaultFields($document),
-        ));
+        $documents
+            ->chunk(100)
+            ->each(function ($documents) {
+                $documents->map(fn ($document) => array_merge(
+                    $this->searchables()->fields($document),
+                    $this->getDefaultFields($document),
+                ));
 
-        $this->getIndex()->updateDocuments($documents);
+                $this->getIndex()->updateDocuments($documents->all());
+            });
 
         return $this;
     }
