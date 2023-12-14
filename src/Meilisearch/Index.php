@@ -14,7 +14,7 @@ class Index extends BaseIndex
 {
     protected $client;
 
-    public function __construct(Client $client, $name, array $config, string $locale = null)
+    public function __construct(Client $client, $name, array $config, ?string $locale = null)
     {
         $this->client = $client;
 
@@ -28,11 +28,26 @@ class Index extends BaseIndex
 
     public function insert($document)
     {
-        $fields = array_merge(
-            $this->searchables()->fields($document),
-            $this->getDefaultFields($document),
-        );
-        $this->getIndex()->updateDocuments([$fields]);
+        return $this->insertMultiple(collect($document));
+    }
+
+    public function insertMultiple($documents)
+    {
+        $documents
+            ->chunk(config('statamic-meilisearch.insert_chunk_size', 100))
+            ->each(function ($documents, $index) {
+                $documents = $documents
+                    ->map(fn ($document) => array_merge(
+                        $this->searchables()->fields($document),
+                        $this->getDefaultFields($document),
+                    ))
+                    ->values()
+                    ->toArray();
+
+                $this->insertDocuments(new Documents($documents));
+            });
+
+        return $this;
     }
 
     public function delete($document)
@@ -53,15 +68,7 @@ class Index extends BaseIndex
 
     protected function insertDocuments(Documents $documents)
     {
-        try {
-            if ($documents->isEmpty()) {
-                return true;
-            }
-
-            return $this->getIndex()->updateDocuments($documents->all());
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        $this->getIndex()->updateDocuments($documents->all());
     }
 
     protected function deleteIndex()
@@ -94,17 +101,7 @@ class Index extends BaseIndex
         $this->deleteIndex();
         $this->createIndex();
 
-        // Prepare documents for update
-        $searchables = $this->searchables()->all()->map(function ($entry) {
-            return array_merge(
-                $this->searchables()->fields($entry),
-                $this->getDefaultFields($entry),
-            );
-        });
-
-        // Update documents
-        $documents = new Documents($searchables);
-        $this->insertDocuments($documents);
+        $this->searchables()->lazy()->each(fn ($searchables) => $this->insertMultiple($searchables));
 
         return $this;
     }
@@ -166,5 +163,10 @@ class Index extends BaseIndex
                 return Str::slug($part);
             })
             ->implode('---');
+    }
+
+    public function getCount()
+    {
+        return $this->getIndex()->stats()['numberOfDocuments'] ?? 0;
     }
 }
