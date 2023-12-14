@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.2.0 - 2023-12-14
+
+### What's Changed
+
+* Use lazy indexing/updating for performance and reduced memory usage by @ryanmitchell in https://github.com/statamic-rad-pack/meilisearch/pull/31
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v3.1.0...v3.2.0
+
 ## v3.1.0 (2023-11-27)
 
 ### What's new
@@ -150,6 +158,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
