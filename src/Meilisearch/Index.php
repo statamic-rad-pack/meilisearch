@@ -41,7 +41,7 @@ class Index extends BaseIndex
                     $this->getDefaultFields($document),
                 ));
 
-                $this->getIndex()->updateDocuments($documents->all());
+                $this->insertDocuments(new Documents($documents->toArray()));
             });
 
         return $this;
@@ -65,7 +65,7 @@ class Index extends BaseIndex
 
     protected function insertDocuments(Documents $documents)
     {
-        // we dont use this, but the abstract class requires it
+        $this->getIndex()->updateDocuments($documents->all());
     }
 
     protected function deleteIndex()
