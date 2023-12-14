@@ -28,7 +28,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0",
         "illuminate/support": "^9.0|^10.0",
-        "statamic/cms": "^4.0"
+        "statamic/cms": "^4.41"
     },
     "require-dev": {
         "orchestra/testbench": "^7.0 || ^8.0",
