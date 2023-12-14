@@ -34,7 +34,7 @@ class Index extends BaseIndex
     public function insertMultiple($documents)
     {
         $documents
-            ->chunk(100)
+            ->chunk(config('statamic-meilisearch.insert_chunk_size', 100))
             ->each(function ($documents, $index) {
                 $documents = $documents
                     ->map(fn ($document) => array_merge(
