@@ -35,13 +35,16 @@ class Index extends BaseIndex
     {
         $documents
             ->chunk(100)
-            ->each(function ($documents) {
-                $documents->map(fn ($document) => array_merge(
-                    $this->searchables()->fields($document),
-                    $this->getDefaultFields($document),
-                ));
+            ->each(function ($documents, $index) {
+                $documents = $documents
+                    ->map(fn ($document) => array_merge(
+                        $this->searchables()->fields($document),
+                        $this->getDefaultFields($document),
+                    ))
+                    ->values()
+                    ->toArray();
 
-                $this->insertDocuments(new Documents($documents->toArray()));
+                $this->insertDocuments(new Documents($documents));
             });
 
         return $this;
