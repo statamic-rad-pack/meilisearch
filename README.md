@@ -65,6 +65,12 @@ window.meilisearch = new meilisearch({
 </script>
 ```
 
+You can optionally publish the config file for this package using:
+
+```
+php artisan vendor:publish --tag=statamic-meilisearch-config
+```
+
 ### Few words about Document IDs in meilisearch
 
 When you index your Statamic Entries, the driver will always transform the ID. This is required because meilisearch only allows `id` to be a string containing alphanumeric characters (a-Z, 0-9), hyphens (-) and underscores (_). You can read more about this in the [meilisearch documentation](https://www.meilisearch.com/docs/learn/core_concepts/primary_key#invalid_document_id)
