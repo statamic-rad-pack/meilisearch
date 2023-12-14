@@ -164,4 +164,9 @@ class Index extends BaseIndex
             })
             ->implode('---');
     }
+
+    public function getCount()
+    {
+        return $this->getIndex()->stats()['numberOfDocuments'] ?? 0;
+    }
 }
