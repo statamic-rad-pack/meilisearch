@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.2.1 - 2023-12-18
+
+### What's Changed
+
+* Fixed inserting single documents by @naabster in https://github.com/statamic-rad-pack/meilisearch/pull/33
+
+### New Contributors
+
+* @naabster made their first contribution in https://github.com/statamic-rad-pack/meilisearch/pull/33
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v3.2.0...v3.2.1
+
 ## v3.2.0 - 2023-12-14
 
 ### What's Changed
@@ -158,6 +170,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
