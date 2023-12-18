@@ -28,7 +28,7 @@ class Index extends BaseIndex
 
     public function insert($document)
     {
-        return $this->insertMultiple(collect($document));
+        return $this->insertMultiple(collect([$document]));
     }
 
     public function insertMultiple($documents)
