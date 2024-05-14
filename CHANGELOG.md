@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.3.0 - 2024-05-14
+
+### What's Changed
+
+* Community Health Files by @duncanmcclean in https://github.com/statamic-rad-pack/meilisearch/pull/34
+* Add Statamic 5 support by @godismyjudge95 in https://github.com/statamic-rad-pack/meilisearch/pull/38
+
+### New Contributors
+
+* @godismyjudge95 made their first contribution in https://github.com/statamic-rad-pack/meilisearch/pull/38
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v3.2.1...v3.3.0
+
 ## v3.2.1 - 2023-12-18
 
 ### What's Changed
@@ -170,6 +183,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
