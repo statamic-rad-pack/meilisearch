@@ -5,8 +5,8 @@ This addon provides a [Meilisearch](https://www.meilisearch.com/) search driver 
 ## Requirements
 
 * PHP 8.1+
-* Laravel 9+
-* Statamic 4
+* Laravel 10+
+* Statamic 5
 * Meilisearch 1.0+
 
 ### Installation
