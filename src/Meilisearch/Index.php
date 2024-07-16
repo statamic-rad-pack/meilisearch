@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Meilisearch\Client;
 use Meilisearch\Exceptions\ApiException;
 use Statamic\Contracts\Search\Searchable;
+use Statamic\Events\SearchIndexUpdated;
 use Statamic\Search\Documents;
 use Statamic\Search\Index as BaseIndex;
 
@@ -102,6 +103,8 @@ class Index extends BaseIndex
         $this->createIndex();
 
         $this->searchables()->lazy()->each(fn ($searchables) => $this->insertMultiple($searchables));
+
+        SearchIndexUpdated::dispatch($this);
 
         return $this;
     }
