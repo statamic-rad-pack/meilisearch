@@ -19,7 +19,7 @@ class TestCase extends AddonTestCase
         $app['config']->set('statamic.search.drivers.meilisearch', [
             'credentials' => [
                 'url' => 'http://localhost:7700',
-                'secret' => 'LARAVEL-HERD',
+                'secret' => 'masterKey',
             ],
         ]);
 
