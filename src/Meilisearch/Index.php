@@ -169,4 +169,9 @@ class Index extends BaseIndex
     {
         return $this->getIndex()->stats()['numberOfDocuments'] ?? 0;
     }
+
+    public function client()
+    {
+        return $this->client;
+    }
 }
