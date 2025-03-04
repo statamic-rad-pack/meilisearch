@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.4.0 - 2025-03-04
+
+### What's Changed
+
+* Tests now against an actual Meilisearch instance by @ryanmitchell in https://github.com/statamic-rad-pack/meilisearch/pull/40
+* Laravel 12 support by @andjsch in https://github.com/statamic-rad-pack/meilisearch/pull/42
+
+### New Contributors
+
+* @andjsch made their first contribution in https://github.com/statamic-rad-pack/meilisearch/pull/42
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v3.3.0...v3.4.0
+
 ## v3.3.0 - 2024-05-14
 
 ### What's Changed
@@ -183,6 +196,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
