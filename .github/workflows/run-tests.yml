@@ -25,10 +25,9 @@ jobs:
                 os: [ubuntu-latest]
                 php: [8.2, 8.3, 8.4]
                 laravel: [11.*, 12.*]
-                statamic: [5.*]
                 dependency-version: [prefer-stable]
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - S${{ matrix.statamic }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+        name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
         steps:
             - name: Checkout code
@@ -48,7 +47,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer require "statamic/cms:${{ matrix.statamic }}" "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+                  composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
             - name: Execute tests
