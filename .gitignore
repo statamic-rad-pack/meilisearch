@@ -4,5 +4,3 @@
 composer.lock
 .php-cs-fixer.cache
 .phpunit.cache
-build/report.junit.xml
-/tests/__fixtures__
