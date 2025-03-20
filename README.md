@@ -96,8 +96,6 @@ Any additional settings you want to define per index can be included in the `sta
           'filterableAttributes' => ['type', 'locale'],
         ],
     ],
-    :
-    :
 ],
 ```
 
@@ -123,8 +121,6 @@ You may include different types of settings in each index:
             ],
         ],
     ],
-    :
-    :
 ],
 ```
 
@@ -143,8 +139,6 @@ By default we limit the `maxTotalHits` to 1000000, if you want to modify this or
             'maxTotalHits' => 100,
         ],
     ],
-    :
-    :
 ],
 ```
 
