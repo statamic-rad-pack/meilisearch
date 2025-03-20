@@ -86,38 +86,46 @@ Internally Statamic will use `\Statamic\Facades\Data::find($reference)` to resol
 Any additional settings you want to define per index can be included in the `statamic/search.php` config file. The settings will be updated when the index is created.
 
 ```php
-// articles
-'articles' => [
-    'driver' => 'meilisearch',
-    'searchables' => ['collection:articles'],
-    'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
-    'settings' => [
-      'filterableAttributes' => ['type', 'locale'],
+'indexes' => [
+    // articles
+    'articles' => [
+        'driver' => 'meilisearch',
+        'searchables' => ['collection:articles'],
+        'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
+        'settings' => [
+          'filterableAttributes' => ['type', 'locale'],
+        ],
     ],
+    :
+    :
 ],
 ```
 
 You may include different types of settings in each index:
 
 ```php
-'articles' => [
-    'driver' => 'meilisearch',
-    'searchables' => ['collection:articles'],
-    'settings' => [
-        'filterableAttributes' => ['type', 'country', 'locale'],
-        'distinctAttribute' => 'thread',
-        'stopWords' => ['the', 'of', 'to'],
-        'sortableAttributes' => ['timestamp'],
-        'rankingRules' => [
-          'sort',
-          'words',
-          'typo',
-          'proximity',
-          'attribute',
-          'exactness',
+'indexes' => [
+    'articles' => [
+        'driver' => 'meilisearch',
+        'searchables' => ['collection:articles'],
+        'settings' => [
+            'filterableAttributes' => ['type', 'country', 'locale'],
+            'distinctAttribute' => 'thread',
+            'stopWords' => ['the', 'of', 'to'],
+            'sortableAttributes' => ['timestamp'],
+            'rankingRules' => [
+                'sort',
+                'words',
+                'typo',
+                'proximity',
+                'attribute',
+                'exactness',
+            ],
         ],
     ],
- ],
+    :
+    :
+],
 ```
 
 ### Search Pagination
@@ -125,14 +133,18 @@ You may include different types of settings in each index:
 By default we limit the `maxTotalHits` to 1000000, if you want to modify this or any other pagination settings on the index, specify a pagination key:
 
 ```php
-// articles
-'articles' => [
-    'driver' => 'meilisearch',
-    'searchables' => ['collection:articles'],
-    'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
-    'pagination' => [
-      'maxTotalHits' => 100,
+'indexes' => [
+    // articles
+    'articles' => [
+        'driver' => 'meilisearch',
+        'searchables' => ['collection:articles'],
+        'fields' => ['id', 'title', 'url', 'type', 'content', 'locale'],
+        'pagination' => [
+            'maxTotalHits' => 100,
+        ],
     ],
+    :
+    :
 ],
 ```
 
