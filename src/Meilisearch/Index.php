@@ -106,7 +106,7 @@ class Index extends BaseIndex
         return $this;
     }
 
-    public function searchUsingApi($query, array $options = ['hitsPerPage' => 1000000, 'showRankingScore' => true]): Collection
+    public function searchUsingApi($query, array $options = []): Collection
     {
         try {
             $searchResults = $this->getIndex()->search($query, $options);
