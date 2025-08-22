@@ -23,9 +23,9 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                php: [8.2, 8.3]
-                laravel: [10.*, 11.*]
-                statamic: [5.*]
+                php: [8.3, 8.4]
+                laravel: [11.*, 12.*]
+                statamic: [5.*, 6.*]
                 dependency-version: [prefer-stable]
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - S${{ matrix.statamic }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
