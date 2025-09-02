@@ -64,7 +64,8 @@
         },
         "statamic": {
             "name": "Meilisearch",
-            "description": "Meilisearch search driver for Statamic"
+            "description": "Meilisearch search driver for Statamic",
+            "developer": "Statamic Rad Pack"
         }
     },
     "minimum-stability": "dev"
