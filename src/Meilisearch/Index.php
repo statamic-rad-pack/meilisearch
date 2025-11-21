@@ -31,6 +31,14 @@ class Index extends BaseIndex
         return $this->insertMultiple(collect([$document]));
     }
 
+    public function fields(Searchable $searchable)
+    {
+        return array_merge(
+            $this->searchables()->fields($searchable),
+            $this->getDefaultFields($searchable)
+        );
+    }
+
     public function delete($document)
     {
         $this->getIndex()->deleteDocument($this->getSafeDocumentID($document->getSearchReference()));
