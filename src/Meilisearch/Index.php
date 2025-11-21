@@ -66,7 +66,7 @@ class Index extends BaseIndex
         }
     }
 
-    protected function insertDocuments(Documents $documents)
+    public function insertDocuments(Documents $documents)
     {
         $this->getIndex()->updateDocuments($documents->all());
     }
