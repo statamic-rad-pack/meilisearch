@@ -28,7 +28,8 @@
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0",
         "illuminate/support": "^12.0",
-        "statamic/cms": "dev-search-indexes-with-underscores"
+        "statamic/cms": "^6.0.0-beta.4",
+        "spatie/laravel-ray": "^1.0@dev"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
@@ -68,5 +69,6 @@
             "developer": "Statamic Rad Pack"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
