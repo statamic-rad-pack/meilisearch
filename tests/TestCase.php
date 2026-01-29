@@ -15,7 +15,6 @@ class TestCase extends AddonTestCase
     {
         parent::resolveApplicationConfiguration($app);
 
-        // add driver
         $app['config']->set('statamic.search.drivers.meilisearch', [
             'credentials' => [
                 'url' => 'http://localhost:7700',
@@ -23,7 +22,10 @@ class TestCase extends AddonTestCase
             ],
         ]);
 
-        // add index
+        $app['config']->set('statamic.search.indexes.cp', [
+            'driver' => 'null',
+        ]);
+
         $app['config']->set('statamic.search.indexes.meilisearch_index', [
             'driver' => 'meilisearch',
             'searchables' => ['collection:pages'],

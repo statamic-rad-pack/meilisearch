@@ -27,13 +27,14 @@
         "meilisearch/meilisearch-php": "^1.0",
         "guzzlehttp/guzzle": "^7.3",
         "http-interop/http-factory-guzzle": "^1.0",
-        "illuminate/support": "^10.0 || ^11.0 || ^12.0",
-        "statamic/cms": "^5.0"
+        "illuminate/support": "^12.0",
+        "statamic/cms": "^6.0.0-beta.4",
+        "spatie/laravel-ray": "^1.0@dev"
     },
     "require-dev": {
         "laravel/pint": "^1.21",
-        "orchestra/testbench": "^8.14 || ^9.0 || ^10.0",
-        "phpunit/phpunit": "^10.0 || ^11.5.10"
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^11.5.10"
     },
     "autoload": {
         "psr-4": {
@@ -64,7 +65,9 @@
         },
         "statamic": {
             "name": "Meilisearch",
-            "description": "Meilisearch search driver for Statamic"
+            "description": "Meilisearch search driver for Statamic",
+            "developer": "Statamic Rad Pack"
         }
-    }
+    },
+    "prefer-stable": true
 }
