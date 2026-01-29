@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## v4.0.0 - 2026-01-29
+
+### What's Changed
+
+* Add 'Indexes' clarify the configuration place for indexes by @ym-henkelhiedl in https://github.com/statamic-rad-pack/meilisearch/pull/43
+* Update README.md by @ym-henkelhiedl in https://github.com/statamic-rad-pack/meilisearch/pull/44
+* Statamic 6 by @duncanmcclean in https://github.com/statamic-rad-pack/meilisearch/pull/46
+
+### New Contributors
+
+* @ym-henkelhiedl made their first contribution in https://github.com/statamic-rad-pack/meilisearch/pull/43
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v3.4.0...v4.0.0
+
 ## v3.4.0 - 2025-03-04
 
 ### What's Changed
@@ -196,6 +210,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
