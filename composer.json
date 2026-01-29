@@ -69,6 +69,5 @@
             "developer": "Statamic Rad Pack"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }
