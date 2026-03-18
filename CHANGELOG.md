@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## v4.1.0 - 2026-03-18
+
+### What's Changed
+
+* Supports Laravel 13 by @duncanmcclean in https://github.com/statamic-rad-pack/meilisearch/pull/49
+
+**Full Changelog**: https://github.com/statamic-rad-pack/meilisearch/compare/v4.0.0...v4.1.0
+
 ## v4.0.0 - 2026-01-29
 
 ### What's Changed
@@ -210,6 +218,7 @@ In consultation with @tao, I have revised the adapter, and we present the first 
         'collection' => fn($collection) => $collection?->handle(),
     ],
  ],
+
 
 
 
